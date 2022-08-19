@@ -1,6 +1,6 @@
 import Footer from '@/components/templates/Footer'
 import Header from '@/components/templates/Header'
-import Main from '@/components/templates/Main'
+import Main from '@/pages/Main'
 import '@/styles/App.css'
 
 function App() {

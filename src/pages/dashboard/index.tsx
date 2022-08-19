@@ -1,6 +1,6 @@
-import Home from '@/components/templates/Home'
+import DashboardTemplate from '@/components/templates/Dashboard'
 
-const Main = () => {
+const Dashboard = () => {
   const todoList = {
     data: [
       {
@@ -19,8 +19,8 @@ const Main = () => {
         id: 2,
         name: 'task 2 Lorem ipsum dolor sit amet consectetur adipisicing elit.',
         due_date: '2022/12/31',
-        status_id: 1,
-        status: 'Active',
+        status_id: 2,
+        status: 'Pending',
         priority_id: 1,
         priority: 'High',
         created_at: '2022/12/31',
@@ -43,8 +43,8 @@ const Main = () => {
         id: 4,
         name: 'task 4 Lorem ipsum dolor sit amet consectetur adipisicing elit.',
         due_date: '2022/11/31',
-        status_id: 1,
-        status: 'Active',
+        status_id: 4,
+        status: 'Dangerous',
         priority_id: 1,
         priority: 'High',
         created_at: '2022/11/31',
@@ -55,10 +55,10 @@ const Main = () => {
         id: 5,
         name: 'task 5 Lorem ipsum dolor sit amet consectetur adipisicing elit.',
         due_date: '2022/12/31',
-        status_id: 1,
-        status: 'Active',
-        priority_id: 1,
-        priority: 'High',
+        status_id: 5,
+        status: 'Warning',
+        priority_id: 2,
+        priority: 'Medium',
         created_at: '2022/12/31',
         updated_at: '2022/12/31',
         deleted_at: null
@@ -76,9 +76,9 @@ const Main = () => {
 
   return (
     <>
-      <Home todoList={todoList.data} paginate={todoList.meta} />
+      <DashboardTemplate todoList={todoList.data} paginate={todoList.meta} />
     </>
   )
 }
 
-export default Main
+export default Dashboard

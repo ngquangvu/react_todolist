@@ -1,6 +1,6 @@
 import { Button } from '../atoms/Button'
 
-const Home = (props: any) => {
+const Dashboard = (props: any) => {
   const editTodo = (id: number) => {
     console.log('edit todo ' + id)
   }
@@ -31,16 +31,26 @@ const Home = (props: any) => {
               </td>
               <td className="py-3 px-6 text-left">
                 <div className="flex items-center">
-                  <span className="break-words">{item.name}</span>
+                  <span className="break-words font-mono">{item.name}</span>
                 </div>
               </td>
               <td className="py-3 px-6 text-center">
                 <div className="flex items-center justify-center">
-                  <span>{item.due_date}</span>
+                  <span className="font-mono">{item.due_date}</span>
                 </div>
               </td>
-              <td className="py-3 px-6 text-center">
-                <span className="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs">{item.status}</span>
+              <td className="py-3 px-6 text-center ">
+                <span
+                  className={`font-mono py-1 px-3 rounded-full text-xs ${
+                    item.status_id == 1 && 'bg-purple-200 text-purple-600'
+                  } ${item.status_id == 2 && 'bg-blue-200 text-blue-600'}
+                  ${item.status_id == 3 && 'bg-green-200 text-green-600'}
+                  ${item.status_id == 4 && 'bg-red-200 text-red-600'}
+                  ${item.status_id == 5 && 'bg-yellow-200 text-yellow-600'}
+                  `}
+                >
+                  {item.status}
+                </span>
               </td>
               <td className="py-3 px-6 text-center">
                 <div className="flex item-center justify-center">
@@ -83,4 +93,4 @@ const Home = (props: any) => {
   )
 }
 
-export default Home
+export default Dashboard

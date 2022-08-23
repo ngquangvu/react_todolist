@@ -1,16 +1,69 @@
 import { useState } from 'react'
 
+import chroma from 'chroma-js'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import Select from 'react-select'
+
+import { colourOptions } from '../docs/data'
+
+import type { ColourOption } from '../docs/data'
+import type { StylesConfig } from 'react-select'
 
 const EditModal = (props: any) => {
-  const { isOpen, setIsOpen, id, description } = props
+  const { isOpen, setIsOpen, id } = props
   const [date, setDate] = useState(new Date())
   const handleChange = (date) => setDate(date)
 
   const today = new Date()
-  const in3Days = new Date()
-  in3Days.setDate(in3Days.getDate() + 3)
+
+  const dot = (color = 'transparent') => ({
+    alignItems: 'center',
+    display: 'flex',
+
+    ':before': {
+      backgroundColor: color,
+      borderRadius: 10,
+      content: '" "',
+      display: 'block',
+      marginRight: 8,
+      height: 10,
+      width: 10
+    }
+  })
+
+  const colourStyles: StylesConfig<ColourOption> = {
+    control: (styles) => ({ ...styles, backgroundColor: 'white' }),
+    option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+      const color = chroma(data.color)
+      return {
+        ...styles,
+        backgroundColor: isDisabled
+          ? undefined
+          : isSelected
+          ? data.color
+          : isFocused
+          ? color.alpha(0.1).css()
+          : undefined,
+        color: isDisabled
+          ? '#ccc'
+          : isSelected
+          ? chroma.contrast(color, 'white') > 2
+            ? 'white'
+            : 'black'
+          : data.color,
+        cursor: isDisabled ? 'not-allowed' : 'default',
+
+        ':active': {
+          ...styles[':active'],
+          backgroundColor: !isDisabled ? (isSelected ? data.color : color.alpha(0.3).css()) : undefined
+        }
+      }
+    },
+    input: (styles) => ({ ...styles, ...dot() }),
+    placeholder: (styles) => ({ ...styles, ...dot('#ccc') }),
+    singleValue: (styles, { data }) => ({ ...styles, ...dot(data.color) })
+  }
   return (
     <>
       {isOpen ? (
@@ -48,39 +101,40 @@ const EditModal = (props: any) => {
                   <span className="sr-only">Close modal</span>
                 </button>
                 <div className="p-6 text-center">
-                  <div className="mb-5">
-                    <div className="mb-4">
-                      <div className="flex flex-col justify-start">
-                        <span className="w-fit mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">
-                          Task / Todo
-                        </span>
-                        <textarea
-                          id="message"
-                          rows="4"
-                          class="block p-2.5 w-full text-sm text-gray-900
-                      bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-300
-                       focus:border-blue-300 dark:placeholder-gray-400 dark:text-white"
-                          placeholder="Leave a comment..."
-                        ></textarea>
-                      </div>
+                  <div className="mb-8">
+                    <div className="mb-4 flex flex-col justify-start">
+                      <span className="w-fit mb-2 text-sm font-medium text-gray-400">ID</span>
+                      <span className="w-fit text-sm"> {id}</span>
                     </div>
 
-                    <div className="flex flex-col justify-start">
-                      <span className="w-fit mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Due date</span>
-                      <div className="border">
+                    <div className="mb-4 flex flex-col justify-start">
+                      <span className="w-fit mb-2 text-sm font-medium text-gray-400">Task / Todo</span>
+                      <textarea
+                        id="message"
+                        rows="4"
+                        className="block p-2.5 w-full text-sm text-gray-900
+                      bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-300
+                       focus:border-blue-300"
+                        placeholder="Leave a comment..."
+                      ></textarea>
+                    </div>
+
+                    <div className="mb-4 flex flex-col justify-start">
+                      <span className="w-fit mb-2 text-sm font-medium text-gray-400">Due date</span>
+                      <div className="w-fit">
                         <DatePicker
                           selected={date}
                           onChange={handleChange}
                           minDate={today}
-                          maxDate={in3Days}
                           showTimeSelect
                           dateFormat="d/MM/yyyy hh:mm aa"
                         />
                       </div>
                     </div>
 
-                    <div className="flex flex-col justify-start">
-                      <span className="w-fit mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Status</span>
+                    <div className="mb-4 flex flex-col justify-start">
+                      <span className="w-fit mb-2 text-sm font-medium text-gray-400">Status</span>
+                      <Select defaultValue={colourOptions[2]} options={colourOptions} styles={colourStyles} />
                     </div>
                   </div>
 

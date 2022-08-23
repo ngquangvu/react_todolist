@@ -6,7 +6,7 @@ const Dashboard = () => {
       {
         id: 1,
         name: 'task 1 Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-        due_date: '2022/11/31',
+        due_datetime: '2022/11/31 10:30',
         status_id: 1,
         status: 'Active',
         priority_id: 1,
@@ -18,7 +18,7 @@ const Dashboard = () => {
       {
         id: 2,
         name: 'task 2 Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-        due_date: '2022/12/31',
+        due_datetime: '2022/12/31 10:30',
         status_id: 2,
         status: 'Pending',
         priority_id: 1,
@@ -30,7 +30,7 @@ const Dashboard = () => {
       {
         id: 3,
         name: 'task 3 Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-        due_date: '2022/10/01',
+        due_datetime: '2022/10/01 10:30',
         status_id: 3,
         status: 'Done',
         priority_id: 3,
@@ -42,7 +42,7 @@ const Dashboard = () => {
       {
         id: 4,
         name: 'task 4 Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-        due_date: '2022/11/31',
+        due_datetime: '2022/11/31 10:30',
         status_id: 4,
         status: 'Dangerous',
         priority_id: 1,
@@ -54,7 +54,7 @@ const Dashboard = () => {
       {
         id: 5,
         name: 'task 5 Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-        due_date: '2022/12/31',
+        due_datetime: '2022/12/31 10:30',
         status_id: 5,
         status: 'Warning',
         priority_id: 2,

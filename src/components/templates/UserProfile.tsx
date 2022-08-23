@@ -15,37 +15,37 @@ const UserProfile = () => {
                 <div className="px-4 py-5 bg-white sm:p-6">
                   <div className="grid grid-cols-6 gap-6">
                     <div className="col-span-6 sm:col-span-3">
-                      <label className="block text-sm font-medium text-gray-700">First name</label>
+                      <span className="block text-sm font-medium text-gray-700">First name</span>
                       <input
                         type="text"
                         name="first-name"
                         id="first-name"
-                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                        className="h-9 pl-2 pr-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                       />
                     </div>
 
                     <div className="col-span-6 sm:col-span-3">
-                      <label className="block text-sm font-medium text-gray-700">Last name</label>
+                      <span className="block text-sm font-medium text-gray-700">Last name</span>
                       <input
                         type="text"
                         name="last-name"
                         id="last-name"
-                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                        className="h-9 pl-2 pr-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                       />
                     </div>
 
                     <div className="col-span-6 sm:col-span-4">
-                      <label className="block text-sm font-medium text-gray-700">Email address</label>
+                      <span className="block text-sm font-medium text-gray-700">Email address</span>
                       <input
                         type="text"
                         name="email-address"
                         id="email-address"
-                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                        className="h-9 pl-2 pr-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                       />
                     </div>
 
                     <div className="col-span-6 sm:col-span-3">
-                      <label className="block text-sm font-medium text-gray-700">Country</label>
+                      <span className="block text-sm font-medium text-gray-700">Country</span>
                       <select
                         id="country"
                         name="country"
@@ -58,42 +58,42 @@ const UserProfile = () => {
                     </div>
 
                     <div className="col-span-6">
-                      <label className="block text-sm font-medium text-gray-700">Street address</label>
+                      <span className="block text-sm font-medium text-gray-700">Street address</span>
                       <input
                         type="text"
                         name="street-address"
                         id="street-address"
-                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                        className="h-9 pl-2 pr-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                       />
                     </div>
 
                     <div className="col-span-6 sm:col-span-6 lg:col-span-2">
-                      <label className="block text-sm font-medium text-gray-700">City</label>
+                      <span className="block text-sm font-medium text-gray-700">City</span>
                       <input
                         type="text"
                         name="city"
                         id="city"
-                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                        className="h-9 pl-2 pr-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                       />
                     </div>
 
                     <div className="col-span-6 sm:col-span-3 lg:col-span-2">
-                      <label className="block text-sm font-medium text-gray-700">State / Province</label>
+                      <span className="block text-sm font-medium text-gray-700">State / Province</span>
                       <input
                         type="text"
                         name="region"
                         id="region"
-                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                        className="h-9 pl-2 pr-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                       />
                     </div>
 
                     <div className="col-span-6 sm:col-span-3 lg:col-span-2">
-                      <label className="block text-sm font-medium text-gray-700">ZIP / Postal code</label>
+                      <span className="block text-sm font-medium text-gray-700">ZIP / Postal code</span>
                       <input
                         type="text"
                         name="postal-code"
                         id="postal-code"
-                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                        className="h-9 pl-2 pr-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                       />
                     </div>
                   </div>
@@ -141,7 +141,7 @@ const UserProfile = () => {
                           type="radio"
                           className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
                         />
-                        <label className="ml-3 block text-sm font-medium text-gray-700"> Everything </label>
+                        <span className="ml-3 block text-sm font-medium text-gray-700"> Everything </span>
                       </div>
                       <div className="flex items-center">
                         <input
@@ -150,7 +150,7 @@ const UserProfile = () => {
                           type="radio"
                           className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
                         />
-                        <label className="ml-3 block text-sm font-medium text-gray-700"> Same as email </label>
+                        <span className="ml-3 block text-sm font-medium text-gray-700"> Same as email </span>
                       </div>
                       <div className="flex items-center">
                         <input
@@ -159,7 +159,7 @@ const UserProfile = () => {
                           type="radio"
                           className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
                         />
-                        <label className="ml-3 block text-sm font-medium text-gray-700"> No push notifications </label>
+                        <span className="ml-3 block text-sm font-medium text-gray-700"> No push notifications </span>
                       </div>
                     </div>
                   </fieldset>

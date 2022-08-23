@@ -6,6 +6,7 @@ import ErrorPage from './error'
 import UserProfile from './user'
 
 import Layout from '@/components/config/Layout'
+import CreateTodo from '@/components/templates/CreateTodo'
 
 function App() {
   return (
@@ -15,7 +16,8 @@ function App() {
           <Route element={<Layout />}>
             <Route index element={<Dashboard />} />
             <Route path="/" element={<Dashboard />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard/todo/list" element={<Dashboard />} />
+            <Route path="/dashboard/todo/add" element={<CreateTodo />} />
             <Route path="/user" element={<UserProfile />} />
             <Route path="*" element={<ErrorPage />} />
           </Route>

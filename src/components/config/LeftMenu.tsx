@@ -16,11 +16,15 @@ const LeftMenu = () => {
       children: [
         {
           display: 'タスク一覧',
-          path: '/dashboard'
+          path: '/dashboard/todo/list'
         },
         {
           display: 'タスク新規作成',
           path: '/dashboard/todo/add'
+        },
+        {
+          display: 'タスク検索',
+          path: '/dashboard/todo/search'
         }
       ]
     }
@@ -37,7 +41,16 @@ const LeftMenu = () => {
                 {item.children.map((item_child: any, index_child: number) => (
                   <li className="relative" key={index_child}>
                     <NavLink
-                      className="block w-full text-sm pl-3.5 before:pointer-events-none before:absolute before:-left-1 before:top-1/2 before:h-1.5 before:w-1.5 before:-translate-y-1/2 before:rounded-full text-slate-500 before:hidden before:bg-slate-300 hover:text-slate-600 hover:before:block dark:text-slate-400 dark:before:bg-slate-700 dark:hover:text-slate-300"
+                      // className={`${
+                      //   isActive && 'mb-9'
+                      // } block w-full text-sm pl-3.5 before:pointer-events-none before:absolute before:-left-1 before:top-1/2 before:h-1.5 before:w-1.5 before:-translate-y-1/2 before:rounded-full text-slate-500 before:hidden before:bg-slate-300 hover:text-slate-600 hover:before:block`}
+                      className={({ isActive }) =>
+                        `${
+                          isActive
+                            ? 'hover:text-sky-500 font-semibold text-sky-500 before:bg-sky-500'
+                            : 'not-active-class'
+                        } block w-full text-sm pl-3.5 before:pointer-events-none before:absolute before:-left-1 before:top-1/2 before:h-1.5 before:w-1.5 before:-translate-y-1/2 before:rounded-full text-slate-500 before:hidden before:bg-slate-300 hover:text-slate-600 hover:before:block`
+                      }
                       key={index_child}
                       to={item_child.path}
                     >

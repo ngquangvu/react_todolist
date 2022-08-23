@@ -2,14 +2,23 @@ import { useState } from 'react'
 
 import StatusCapsule from '../molecules/StatusCapsule'
 import DeleteModal from '../organisms/DeleteModal'
+import EditModal from '../organisms/EditModal'
 
 const Dashboard = (props: any) => {
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false)
+  const [isOpenEditModal, setIsOpenEditModal] = useState(false)
   const [editID, setEditID] = useState(0)
 
   // const editTodo = (id: number) => {
   //   console.log('edit todo ' + id)
   // }
+
+  const editTodo = (id: number) => {
+    setIsOpenEditModal(() => true)
+    setEditID(id)
+
+    console.log('delete todo ' + id)
+  }
 
   const deleteTodo = (id: number) => {
     setIsOpenDeleteModal(() => true)
@@ -100,7 +109,7 @@ const Dashboard = (props: any) => {
                     <button
                       type="button"
                       onClick={() => {
-                        console.log('edit')
+                        editTodo(item.id)
                       }}
                       className="w-4 mr-2 transform hover:text-blue-500 hover:scale-110"
                     >
@@ -127,6 +136,12 @@ const Dashboard = (props: any) => {
         </table>
       </div>
 
+      <EditModal
+        isOpen={isOpenEditModal}
+        setIsOpen={setIsOpenEditModal}
+        id={editID}
+        description="Are you sure you want to edit this product?"
+      />
       <DeleteModal
         isOpen={isOpenDeleteModal}
         setIsOpen={setIsOpenDeleteModal}

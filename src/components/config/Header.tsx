@@ -6,7 +6,7 @@ const Header = () => {
   const headerIco = 'https://cdn-icons-png.flaticon.com/512/3472/3472580.png'
 
   return (
-    <div className="flex justify-between items-center h-20 bg-white px-4 py-4 shadow-md shadow-slate-900/5 sticky top-0">
+    <div className="flex justify-between z-50 items-center h-20 bg-white px-4 py-4 shadow-md shadow-slate-900/5 sticky top-0">
       <div className="h-full">
         <NavLink to="/">
           <Icon url={headerIco} alt="header-icon" />

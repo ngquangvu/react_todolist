@@ -1,6 +1,8 @@
 import '@/styles/App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
+import Regist from '../pages/regist/index'
+
 import Dashboard from './dashboard'
 import ErrorPage from './error'
 import Login from './login'
@@ -14,6 +16,7 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
+          <Route path="/regist" element={<Regist />} />
           <Route path="/login" element={<Login />} />
           <Route element={<Layout />}>
             <Route index element={<Dashboard />} />

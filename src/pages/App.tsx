@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 import Dashboard from './dashboard'
 import ErrorPage from './error'
+import Login from './login'
 import UserProfile from './user'
 
 import Layout from '@/components/config/Layout'
@@ -13,6 +14,7 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
+          <Route path="/login" element={<Login />} />
           <Route element={<Layout />}>
             <Route index element={<Dashboard />} />
             <Route path="/" element={<Dashboard />} />

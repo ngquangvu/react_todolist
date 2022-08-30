@@ -12,8 +12,9 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, Notifiable, TwoFactorAuthenticatable, SoftDeletes;
-    use HasApiTokens;
+    use HasFactory, Notifiable, TwoFactorAuthenticatable, SoftDeletes, HasApiTokens;
+
+
     /**
      * The attributes that are mass assignable.
      *
@@ -22,7 +23,6 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $fillable = [
         'username',
         'name',
-        'phone',
         'email',
         'password',
     ];
@@ -45,4 +45,9 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function todos()
+    {
+        return $this->hasMany(Todo::class, 'created_by', 'id');
+    }
 }

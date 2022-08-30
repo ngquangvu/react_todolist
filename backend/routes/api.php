@@ -1,7 +1,6 @@
 <?php
 
-use App\Http\Controllers\TestController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\API\TodoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,14 +15,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
 
+//API route for register new user
+Route::post('/register', [App\Http\Controllers\API\AuthController::class, 'register']);
+//API route for login user
+Route::post('/login', [App\Http\Controllers\API\AuthController::class, 'login']);
 
-Route::apiResource('test', TestController::class);
-Route::post('/test/restore',[UserController::class,'restore']);
+//Protecting Routes
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/profile', function(Request $request) {
+        return auth()->user();
+    });
+    // API route for logout user
+    Route::post('/logout', [App\Http\Controllers\API\AuthController::class, 'logout']);
 
-Route::post('/register',[UserController::class,'register']);
-Route::post('/login',[UserController::class,'login']);
-Route::post('/logout',[UserController::class,'logout']);
+    Route::apiResource('todos', TodoController::class);
+    Route::post('/todos/restore/{id}', [TodoController::class, 'restore']);
+});

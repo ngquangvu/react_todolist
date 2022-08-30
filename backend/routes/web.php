@@ -16,49 +16,46 @@ use Illuminate\Http\Request;
 |
 */
 
-// Route::get('/', function () {
-//     return view('pages.top');
-// })->name('top');
+Route::get('/', function () {
+    return view('pages.top');
+})->name('top');
 
-// Route::name('profile.')->prefix('profile')->middleware('auth')->group(function () {
-//     Route::get('/', function () {
-//         $user = Auth::user();
-//         return view('pages.profile', compact('user'));
-//     })->name('show');
+Route::name('profile.')->prefix('profile')->middleware('auth')->group(function () {
+    Route::get('/', function () {
+        $user = Auth::user();
+        return view('pages.profile', compact('user'));
+    })->name('show');
 
-//     Route::get('/edit', function () {
-//         $user = Auth::user();
-//         return view('pages.profile-edit', compact('user'));
-//     })->name('edit');
+    Route::get('/edit', function () {
+        $user = Auth::user();
+        return view('pages.profile-edit', compact('user'));
+    })->name('edit');
 
-//     Route::get('/password', function () {
-//         return view('pages.profile-password');
-//     })->name('password');
-// });
+    Route::get('/password', function () {
+        return view('pages.profile-password');
+    })->name('password');
+});
 
-// Route::get('/home', function () {
-//     return view('welcome');
-// })->middleware('auth')->name('home');
+Route::get('/home', function () {
+    return view('welcome');
+})->middleware('auth')->name('home');
 
-// Route::get('/dashboard', function () {
-//     return view('pages.dashboard');
-// })->middleware('verified')->name('dashboard');
+Route::get('/dashboard', function () {
+    return view('pages.dashboard');
+})->middleware('verified')->name('dashboard');
 
-// Route::get('/home2', function () {
-//     return view('welcome');
-// })->middleware(['verified', 'password.confirm'])->name('home2');
+Route::get('/home2', function () {
+    return view('welcome');
+})->middleware(['verified', 'password.confirm'])->name('home2');
 
-// Route::delete('/user', function (Request $request) {
-//     $user = User::find(Auth::user()->id);
+Route::delete('/user', function (Request $request) {
+    $user = User::find(Auth::user()->id);
 
-//     Auth::logout();
-//     $request->session()->invalidate();
-//     $request->session()->regenerateToken();
+    Auth::logout();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
 
-//     if ($user->delete()) {
-//         return redirect('login')->with('status', 'Your account has been deleted!');
-//     }
-// })->middleware('auth', 'password.confirm')->name('profile.delete');
-
-
-// Route::post('/register-user', [UserController::class,'register'])->name('create-user');
+    if ($user->delete()) {
+        return redirect('login')->with('status', 'Your account has been deleted!');
+    }
+})->middleware('auth', 'password.confirm')->name('profile.delete');

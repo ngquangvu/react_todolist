@@ -32,9 +32,8 @@ class AuthController extends Controller
         $token = $user->createToken('auth_token')->plainTextToken;
         $cookie = cookie('mydomain_api', $token, 60 * 24);
 
-
         return response()
-            ->json(['data' => $user])->withCookie($cookie);
+            ->json(['data' => $user])->withCookie(cookie('name', 'MyValue', 60));
     }
 
     public function login(Request $request)
@@ -51,6 +50,15 @@ class AuthController extends Controller
         return response()
             ->json(['message' => 'Hi ' . $user->name . ', welcome to home', 'access_token' => $token, 'token_type' => 'Bearer',]);
     }
+
+    // public function login(Request $request)
+    // {
+    //     if (Auth::attempt($request->only(['email', 'password']))) {
+    //         return response(["success" => true], 200);
+    //     } else {
+    //         return response(["success" => false], 403);
+    //     }
+    // }
 
     // method for user logout and delete token
     public function logout()

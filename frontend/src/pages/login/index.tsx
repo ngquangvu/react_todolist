@@ -1,12 +1,27 @@
+import axiosClient from '@/config/axiosClient'
+import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
   const navigate = useNavigate()
-  const login = () => {
-    localStorage.setItem('login', '1')
 
-    navigate('/')
+  const login = () => {
+    const url = '/api/login/'
+    // return axiosClient.post(url, data)
   }
+
+  const callAPI = async () => {
+    const result = await axios
+      .post('http://localhost/api/login', {
+        email: 'nagisa.yoko@example.com',
+        password: '12345678'
+      })
+      .then((res) => {
+        console.log(res)
+        navigate('/')
+      })
+  }
+
   return (
     <div className="flex justify-center">
       <section className="h-screen">

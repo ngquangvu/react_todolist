@@ -6,19 +6,33 @@ const Login = () => {
   const navigate = useNavigate()
 
   const login = () => {
-    const url = '/api/login/'
+    // const url = '/api/login/'
     // return axiosClient.post(url, data)
   }
 
-  const callAPI = async () => {
-    const result = await axios
-      .post('http://localhost/api/login', {
-        email: 'nagisa.yoko@example.com',
-        password: '12345678'
+  const handleSubmit = (e) => {
+    e.preventDefault()
+
+    const loginInfo = {
+      email: 'yuta62@example.com',
+      password: '12345678'
+    }
+
+    const headers = {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Request-Headers': 'Content-Type, Authorization',
+      'withCredentials': true,
+      // 'xsrfCookieName': 'XSRF-TOKEN',
+      // 'xsrfHeaderName': 'X-XSRF-TOKEN'
+    }
+
+    axios
+      .post(`http://localhost/api/login`, JSON.stringify(loginInfo), {
+        headers: headers
       })
       .then((res) => {
         console.log(res)
-        navigate('/')
       })
   }
 
@@ -35,7 +49,7 @@ const Login = () => {
               />
             </div>
             <div className="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">
-              <form>
+              <form onSubmit={handleSubmit}>
                 <div className="flex flex-row items-center justify-center lg:justify-start">
                   <p className="text-md mb-0 mr-4">Sign in with</p>
                   <button
@@ -84,7 +98,6 @@ const Login = () => {
                 <div className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
                   <p className="text-md text-center font-semibold mx-4 mb-0">Or</p>
                 </div>
-
                 <div className="mb-6">
                   <input
                     type="text"
@@ -121,8 +134,7 @@ const Login = () => {
 
                 <div className="text-center lg:text-left">
                   <button
-                    type="button"
-                    onClick={login}
+                    type="submit"
                     className="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
                   >
                     Login

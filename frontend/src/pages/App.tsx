@@ -1,37 +1,51 @@
 import '@/styles/App.css'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Outlet, Route, Routes } from 'react-router-dom'
+import { useRecoilValue } from 'recoil'
 
-import Regist from '../pages/regist/index'
-
-import Dashboard from './dashboard'
-import ErrorPage from './error'
-import Login from './login'
-import UserProfile from './user'
 
 import Layout from '@/components/config/Layout'
-import CreateTodo from '@/components/templates/CreateTodo'
+import { PrivatedRoutes, PublicedRoute } from '@/helper/routes'
+import { LoggedIn } from '@/state'
+import { PrivateRoutes, PublicRoutes } from '@/routes/route'
 
 function App() {
+  const isLoggedIn = useRecoilValue(LoggedIn)
+
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/regist" element={<Regist />} />
-          <Route path="/login" element={<Login />} />
-          <Route element={<Layout />}>
-            <Route index element={<Dashboard />} />
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/dashboard/todo/list" element={<Dashboard />} />
-            <Route path="/dashboard/todo/add" element={<CreateTodo />} />
-            <Route path="/user" element={<UserProfile />} />
-            <Route path="*" element={<ErrorPage />} />
+          {/* Private routes */}
+          <Route
+            path='/'
+            element={
+              <PrivatedRoutes isLoggedIn={isLoggedIn}>
+                <Layout />
+              </PrivatedRoutes>
+            }
+          >
+            {PrivateRoutes.map((item, index) => (
+              <Route key={index} path={item.path} element={item.element} />
+            ))}
           </Route>
+
+          {/* Public routes */}
+          <Route
+            path='/'
+            element={
+              <PublicedRoute>
+                 <Outlet />
+              </PublicedRoute>
+            }
+          >
+            {PublicRoutes.map((item, index) => (
+              <Route key={index} path={item.path} element={item.element} />
+            ))}
+          </Route>
+
+          <Route path={'/*'} element={<Navigate to="/" />} />
         </Routes>
       </BrowserRouter>
-
-      {/* <Header />
-      <main className="flex justify-center items-center w-full h-full min-h-full p-14"></main>
-      <Footer /> */}
     </>
   )
 }

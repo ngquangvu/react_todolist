@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
+use stdClass;
 
 class AuthController extends Controller
 {
@@ -30,27 +31,9 @@ class AuthController extends Controller
             'password' => Hash::make($request->password)
         ]);
 
-        $token = $user->createToken('auth_token')->plainTextToken;
-
         return response()
             ->json(['data' => $user]);
     }
-
-    // public function login(Request $request)
-    // {
-    //     if (!Auth::attempt($request->only('email', 'password'))) {
-    //         return response()
-    //             ->json(['message' => 'Unauthorized'], 401);
-    //     }
-
-    //     $user = User::where('email', $request['email'])->firstOrFail();
-
-    //     $token = $user->createToken('auth_token')->plainTextToken;
-    //     $request->session()->regenerate();
-
-    //     return response()
-    //         ->json(['message' => 'Hi ' . $user->name . ', welcome to home']);
-    // }
 
     public function login(Request $request)
     {
@@ -66,7 +49,15 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return response()->json(['user' => Auth::user()]);
+            $user = new stdClass();
+            $user->id = Auth::user()->id;
+            $user->name = Auth::user()->name;
+            $user->email = Auth::user()->email;
+            $user->created_at = Auth::user()->created_at;
+            $user->updated_at = Auth::user()->updated_at;
+            $user->deleted_at = Auth::user()->deleted_at;
+
+            return response()->json(['user' => $user]);
         }
         throw ValidationException::withMessages([
             'email' => ['The provided credentials are incorrect.'],
@@ -74,9 +65,10 @@ class AuthController extends Controller
     }
 
     // method for user logout and delete token
-    public function logout()
+    public function logout(Request $request)
     {
         auth()->user()->tokens()->delete();
+        $request->session()->invalidate();
 
         return [
             'message' => 'You have successfully logged out and the token was successfully deleted'

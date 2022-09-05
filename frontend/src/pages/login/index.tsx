@@ -1,10 +1,14 @@
-import { axiosLogin, axiosTemplate } from '@/helper/axios'
+import { axiosTemplate } from '@/helper/axios'
+import { LoggedIn } from '@/state'
 import { useNavigate } from 'react-router-dom'
+import { useRecoilState } from 'recoil'
 
 const Login = () => {
   const navigate = useNavigate()
+  const [_, setLoggedIn] = useRecoilState(LoggedIn)
 
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
     const loginInfo = {
@@ -12,12 +16,19 @@ const Login = () => {
       password: '12345678'
     }
 
-    fetchAPI(loginInfo)
+    const res = await fetchAPI(loginInfo)
+    const user = res.data.user
+    console.log(user);
+
+    // success
+    setLoggedIn(true)
+    localStorage.setItem('user', JSON.stringify(user))
+    navigate('/dashboard/todo/list')
   }
 
   const fetchAPI = async (loginInfo: any) => {
     await axiosTemplate.get('/sanctum/csrf-cookie')
-    return axiosTemplate.post(`/api/login`, loginInfo)
+    return axiosTemplate.post('/api/login', loginInfo)
   }
 
   return (

@@ -1,4 +1,4 @@
-import { TodoStatus } from '@/types/TodoStatus'
+import { TodoStatus } from '@/types/Types'
 
 const StatusCapsule = (props: any) => {
   const { status } = props

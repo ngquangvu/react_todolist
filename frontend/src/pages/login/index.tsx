@@ -2,18 +2,22 @@ import { axiosTemplate } from '@/helper/axios'
 import { LoggedIn } from '@/state'
 import { useNavigate } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
+import loginBackground from '@/assets/login_bg.png'
+import { useState } from 'react'
 
 const Login = () => {
   const navigate = useNavigate()
   const [_, setLoggedIn] = useRecoilState(LoggedIn)
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault()
 
     const loginInfo = {
-      email: 'ckiriyama@example.net',
-      password: '12345678'
+      email: email,
+      password: password
     }
 
     const res = await fetchAPI(loginInfo)
@@ -38,7 +42,7 @@ const Login = () => {
           <div className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6">
             <div className="grow-0 shrink-1 md:shrink-0 basis-auto xl:w-6/12 lg:w-6/12 md:w-9/12 mb-12 md:mb-0">
               <img
-                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+                src={loginBackground}
                 className="w-full"
                 alt="login"
               />
@@ -96,6 +100,8 @@ const Login = () => {
                 <div className="mb-6">
                   <input
                     type="text"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     className="text-md form-control block w-full px-4 py-2 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                     id="exampleFormControlInput1"
                     placeholder="Email address"
@@ -105,6 +111,8 @@ const Login = () => {
                 <div className="mb-6">
                   <input
                     type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     className="text-md form-control block w-full px-4 py-2 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                     id="exampleFormControlInput2"
                     placeholder="Password"

@@ -1,39 +1,23 @@
-import axiosClient from '@/config/axiosClient'
-import axios from 'axios'
+import { axiosLogin, axiosTemplate } from '@/helper/axios'
 import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
   const navigate = useNavigate()
 
-  const login = () => {
-    // const url = '/api/login/'
-    // return axiosClient.post(url, data)
-  }
-
   const handleSubmit = (e) => {
     e.preventDefault()
 
     const loginInfo = {
-      email: 'yuta62@example.com',
+      email: 'nguyenquangvu.canvas@gmail.com',
       password: '12345678'
     }
 
-    const headers = {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Request-Headers': 'Content-Type, Authorization',
-      'withCredentials': true,
-      // 'xsrfCookieName': 'XSRF-TOKEN',
-      // 'xsrfHeaderName': 'X-XSRF-TOKEN'
-    }
+    fetchAPI(loginInfo)
+  }
 
-    axios
-      .post(`http://localhost/api/login`, JSON.stringify(loginInfo), {
-        headers: headers
-      })
-      .then((res) => {
-        console.log(res)
-      })
+  const fetchAPI = async (loginInfo: any) => {
+    await axiosTemplate.get('/sanctum/csrf-cookie')
+    return axiosTemplate.post(`/api/login`, loginInfo)
   }
 
   return (

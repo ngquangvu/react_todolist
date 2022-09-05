@@ -1,12 +1,15 @@
 import DashboardTemplate from '@/components/templates/Dashboard'
+import { axiosTemplate } from '@/helper/axios'
+import { useEffect } from 'react'
+import { useQuery } from 'react-query'
 
 const Dashboard = () => {
-  const todoList = {
+  const todoList_dump = {
     data: [
       {
         id: 1,
         name: 'task 1 Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-        due_datetime: '2022/11/31 10:30',
+        due_date: '2022/11/31 10:30',
         status_id: 1,
         status: 'Active',
         priority_id: 1,
@@ -18,7 +21,7 @@ const Dashboard = () => {
       {
         id: 2,
         name: 'task 2 Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-        due_datetime: '2022/12/31 10:30',
+        due_date: '2022/12/31 10:30',
         status_id: 2,
         status: 'Pending',
         priority_id: 1,
@@ -30,7 +33,7 @@ const Dashboard = () => {
       {
         id: 3,
         name: 'task 3 Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-        due_datetime: '2022/10/01 10:30',
+        due_date: '2022/10/01 10:30',
         status_id: 3,
         status: 'Done',
         priority_id: 3,
@@ -42,7 +45,7 @@ const Dashboard = () => {
       {
         id: 4,
         name: 'task 4 Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-        due_datetime: '2022/11/31 10:30',
+        due_date: '2022/11/31 10:30',
         status_id: 4,
         status: 'Dangerous',
         priority_id: 1,
@@ -54,7 +57,7 @@ const Dashboard = () => {
       {
         id: 5,
         name: 'task 5 Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-        due_datetime: '2022/12/31 10:30',
+        due_date: '2022/12/31 10:30',
         status_id: 5,
         status: 'Warning',
         priority_id: 2,
@@ -74,9 +77,20 @@ const Dashboard = () => {
     }
   }
 
+  const fetchAPI = () => {
+    return axiosTemplate.get('/api/todos')
+  }
+
+  const { data, error, isLoading } = useQuery('data', fetchAPI)
+
+  // Error and Loading states
+  if (error) return <div>Request Failed</div>
+  if (isLoading) return <div>Loading...</div>
+
   return (
     <>
-      <DashboardTemplate todoList={todoList.data} paginate={todoList.meta} />
+      {console.log(data)}
+      <DashboardTemplate todoList={data.data.data} paginate={data.data.meta} />
     </>
   )
 }

@@ -53,11 +53,11 @@ class TodoController extends Controller
             'due_date' => 'required|date',
             'status' => [
                 'required',
-                 Rule::in(['n/a', 'new', 'in-progress', 'pending', 'canceled', 'complete']),
+                 Rule::in(['N/A', 'New', 'In-progress', 'Pending', 'Canceled', 'Complete']),
         ],
             'priority' => [
                 'required',
-                 Rule::in(['high', 'medium', 'low']),
+                 Rule::in(['High', 'Medium', 'Low']),
             ],
         ]);
         if ($validator->fails()) {
@@ -119,11 +119,11 @@ class TodoController extends Controller
             'due_date' => 'required|date',
             'status' => [
                 'required',
-                 Rule::in(['n/a', 'new', 'in-progress', 'pending', 'canceled', 'complete']),
+                 Rule::in(['N/A', 'New', 'In-progress', 'Pending', 'Canceled', 'Complete']),
             ],
             'priority' => [
                 'required',
-                 Rule::in(['high', 'medium', 'low']),
+                 Rule::in(['High', 'Medium', 'Low']),
             ],
         ]);
         if ($validator->fails()) {

@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('title')->nullable(false);
             $table->string('content')->nullable();
-            $table->enum('status', ['n/a', 'new', 'in-progress', 'pending', 'canceled', 'complete']);
-            $table->enum('priority', ['high', 'medium', 'low']);
+            $table->enum('status', ['N/A', 'New', 'In-progress', 'Pending', 'Canceled', 'Complete']);
+            $table->enum('priority', ['High', 'Medium', 'Low']);
             $table->dateTime('due_date')->nullable(false);
             $table->bigInteger('created_by')->unsigned()->nullable(false);
             $table->timestamps();

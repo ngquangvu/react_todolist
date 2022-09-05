@@ -30,6 +30,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     // API route for logout user
     Route::post('/logout', [AuthController::class, 'logout']);
 
-    Route::apiResource('todos', TodoController::class);
     Route::post('/todos/restore/{id}', [TodoController::class, 'restore']);
 });
+Route::apiResource('todos', TodoController::class);

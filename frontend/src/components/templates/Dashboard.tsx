@@ -3,6 +3,7 @@ import { useState } from 'react'
 import StatusCapsule from '../molecules/StatusCapsule'
 import DeleteModal from '../organisms/DeleteModal'
 import EditModal from '../organisms/EditModal'
+import moment from 'moment';
 
 const Dashboard = (props: any) => {
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false)
@@ -41,7 +42,7 @@ const Dashboard = (props: any) => {
             </tr>
           </thead>
           <tbody className="text-gray-600 text-sm font-light">
-            {props.todoList.map((item: any, index: number) => (
+            {props.todoList && props.todoList.map((item: any, index: number) => (
               <tr key={index} className="border-b border-gray-200 hover:bg-gray-100">
                 <td className="py-3 px-6 text-left whitespace-nowrap">
                   <div className="flex items-center">
@@ -50,18 +51,18 @@ const Dashboard = (props: any) => {
                 </td>
                 <td className="py-3 px-6 text-left">
                   <div className="flex items-center">
-                    <span className="break-words font-mono">{item.name}</span>
+                    <span className="break-words font-mono">{item.title}</span>
                   </div>
                 </td>
                 <td className="py-3 px-6 text-center">
                   <div className="flex items-center justify-center">
-                    <span className="font-mono">{item.due_datetime}</span>
+                    <span className="font-mono">{moment(item.due_date).format("YYYY/MM/DD hh:mm")}</span>
                   </div>
                 </td>
                 <td className="py-3 px-6 text-center ">
-                  <StatusCapsule status={item.status} statusID={item.status_id} />
+                  <StatusCapsule status={item.status} />
                   {/* <div className="relative inline-block">
-                    <StatusCapsule status={item.status} statusID={item.status_id} />
+                    <StatusCapsule status={item.status} />
                     <div
                       className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none"
                       role="menu"

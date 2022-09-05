@@ -23,8 +23,8 @@ class TodoFactory extends Factory
         return [
             'title' => $this->faker->title() . $this->faker->colorName(),
             'content' => $this->faker->text(),
-            'status' => $this->faker->randomElement(['n/a', 'new', 'in-progress', 'pending', 'canceled']),
-            'priority' => $this->faker->randomElement(['high', 'medium', 'low']),
+            'status' => $this->faker->randomElement(['N/A', 'New', 'In-progress', 'Pending', 'Canceled', 'Complete']),
+            'priority' => $this->faker->randomElement(['High', 'Medium', 'Low']),
             'due_date' => $this->faker->dateTimeBetween($startingDate, strtotime('+6 days'))->format('d-m-Y H:i'),
             'created_at' => now(),
             'created_by' => User::inRandomOrder()->first()->id

@@ -12,7 +12,7 @@ const Login = () => {
     e.preventDefault()
 
     const loginInfo = {
-      email: 'nguyenquangvu.canvas@gmail.com',
+      email: 'ckiriyama@example.net',
       password: '12345678'
     }
 

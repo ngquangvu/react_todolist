@@ -10,10 +10,10 @@ export enum TodoStatus {
 export type UserInfo = {
   id: number
   email: string
-  name: string
-  created_at: Date
-  deleted_at: Date
-  updated_at: Date
+  user_name: string
+  first_name: string
+  last_name: string
+  address: string
 }
 
 export type TypeResponse = {

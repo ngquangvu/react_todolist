@@ -77,8 +77,8 @@ const Dashboard = () => {
     }
   }
 
-  const fetchAPI = () => {
-    return axiosTemplate.get('/api/todos')
+  const fetchAPI = async () => {
+    return await axiosTemplate.get('/api/todos')
   }
 
   const { data, error, isLoading } = useQuery('data', fetchAPI)
@@ -89,7 +89,6 @@ const Dashboard = () => {
 
   return (
     <>
-      {console.log(data)}
       <DashboardTemplate todoList={data.data.data} paginate={data.data.meta} />
     </>
   )

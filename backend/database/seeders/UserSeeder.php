@@ -35,5 +35,6 @@ class UserSeeder extends Seeder
         ]);
 
         // sail artisan migrate:refresh --seed && sail artisan db:seed --class=UserSeeder
+        // php artisan config:cache &&  php artisan config:clear &&  composer dump-autoload -o
     }
 }

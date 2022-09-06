@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\TodoController;
+use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -31,5 +32,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::post('/todos/restore/{id}', [TodoController::class, 'restore']);
+    Route::apiResource('todos', TodoController::class);
+    Route::apiResource('user', UserController::class);
 });
-Route::apiResource('todos', TodoController::class);

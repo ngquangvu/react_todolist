@@ -10,10 +10,6 @@ const Dashboard = (props: any) => {
   const [isOpenEditModal, setIsOpenEditModal] = useState(false)
   const [editID, setEditID] = useState(0)
 
-  // const editTodo = (id: number) => {
-  //   console.log('edit todo ' + id)
-  // }
-
   const editTodo = (id: number) => {
     setIsOpenEditModal(() => true)
     setEditID(id)
@@ -42,7 +38,7 @@ const Dashboard = (props: any) => {
             </tr>
           </thead>
           <tbody className="text-gray-600 text-sm font-light">
-            {props.todoList && props.todoList.map((item: any, index: number) => (
+            {props.todoList.length > 0 && props.todoList.map((item: any, index: number) => (
               <tr key={index} className="border-b border-gray-200 hover:bg-gray-100">
                 <td className="py-3 px-6 text-left whitespace-nowrap">
                   <div className="flex items-center">

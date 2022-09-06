@@ -1,12 +1,18 @@
-import { Outlet } from 'react-router-dom'
+import { Navigate, Outlet } from 'react-router-dom'
 
 import Footer from './Footer'
 import Header from './Header'
 import LeftMenu from './LeftMenu'
 
-import Dashboard from '@/pages/dashboard'
+function AuthLayout() {
+  const user = localStorage.getItem('user')
+  console.log(1113, user);
 
-function Layout() {
+  if (!user) {
+    console.log('hitt3');
+    return <Navigate to="/login" replace />
+  }
+
   return (
     <div>
       <Header />
@@ -15,7 +21,6 @@ function Layout() {
           <LeftMenu />
         </div>
         <div className="w-full min-h-[80vh] p-12 ">
-          {/* <Dashboard /> */}
           <Outlet />
         </div>
       </div>
@@ -24,4 +29,4 @@ function Layout() {
   )
 }
 
-export default Layout
+export default AuthLayout

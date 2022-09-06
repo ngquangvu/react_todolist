@@ -1,16 +1,24 @@
 import '@/styles/App.css'
 import { BrowserRouter, Navigate, Outlet, Route, Routes } from 'react-router-dom'
-import { useRecoilValue } from 'recoil'
 import { useQuery, useMutation, useQueryClient, QueryClient, QueryClientProvider } from 'react-query'
 
-import Layout from '@/components/config/Layout'
+import AuthLayout from '@/components/config/AuthLayout'
 import { PrivatedRoutes, PublicedRoute } from '@/helper/routes'
-import { LoggedIn } from '@/state'
 import { PrivateRoutes, PublicRoutes } from '@/routes/route'
+import { useRecoilState } from 'recoil'
+import { LoggedIn } from '@/state'
 
 function App() {
-  const isLoggedIn = useRecoilValue(LoggedIn)
   const queryClient = new QueryClient()
+  const user = localStorage.getItem('user')
+  const [isLoggedIn, setLoggedIn] = useRecoilState(LoggedIn)
+
+  if (!user) {
+    console.log('hitt');
+    return <Route path="/login" />
+  }
+  setLoggedIn(true)
+
 
   return (
     <>
@@ -22,7 +30,7 @@ function App() {
               path="/"
               element={
                 <PrivatedRoutes isLoggedIn={isLoggedIn}>
-                  <Layout />
+                  <AuthLayout />
                 </PrivatedRoutes>
               }
             >
@@ -45,7 +53,7 @@ function App() {
               ))}
             </Route>
 
-            <Route path={'/*'} element={<Navigate to="/" />} />
+            {/* <Route path={'/*'} element={<Navigate to="/" />} /> */}
           </Routes>
         </BrowserRouter>
       </QueryClientProvider>

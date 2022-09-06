@@ -1,5 +1,5 @@
 import '@/styles/App.css'
-import { BrowserRouter, Navigate, Outlet, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Outlet, Route, Routes, useNavigate } from 'react-router-dom'
 import { useQuery, useMutation, useQueryClient, QueryClient, QueryClientProvider } from 'react-query'
 
 import AuthLayout from '@/components/config/AuthLayout'
@@ -13,12 +13,7 @@ function App() {
   const user = localStorage.getItem('user')
   const [isLoggedIn, setLoggedIn] = useRecoilState(LoggedIn)
 
-  if (!user) {
-    console.log('hitt');
-    return <Route path="/login" />
-  }
   setLoggedIn(true)
-
 
   return (
     <>

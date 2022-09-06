@@ -1,2 +1,24 @@
-export * from '@/types/Types'
-// export * from '@/state/Todo'
+export enum TodoStatus {
+  'N/A',
+  'New',
+  'In-progress',
+  'Pending',
+  'Canceled',
+  'Complete'
+}
+
+export type UserInfo = {
+  id: number
+  email: string
+  name: string
+  created_at: Date
+  deleted_at: Date
+  updated_at: Date
+}
+
+export type TypeResponse = {
+  data: UserInfo
+}
+
+
+

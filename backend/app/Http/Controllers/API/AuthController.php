@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
@@ -16,17 +17,20 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
+            'username' => 'required|string|min:4|max:20|unique:users',
+            'name' => 'required|string|min:4|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:3'
+            'password' => 'required|string|min:3',
+            'password_confirmation' => 'required|string|same:password'
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors());
+            return response()->json($validator->errors(), 422);
         }
 
         $user = User::create([
             'name' => $request->name,
+            'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password)
         ]);
@@ -35,17 +39,16 @@ class AuthController extends Controller
             ->json(['data' => $user]);
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        // return response()->json(['user' => $request->email]);
-
         $request->validate([
-            'email' => 'required|email',
+            'username' => 'required',
             'password' => 'required'
         ]);
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->getCredentials();
+        // $credentials = $request->only('username', 'password');
 
-        // return response()->json($credentials);
+        // return response()->json(['user' => $credentials]);
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
@@ -60,7 +63,7 @@ class AuthController extends Controller
             return response()->json(['user' => $user]);
         }
         throw ValidationException::withMessages([
-            'email' => ['The provided credentials are incorrect.'],
+            'message' => ['入力したログイン情報が間違っています。'],
         ]);
     }
 

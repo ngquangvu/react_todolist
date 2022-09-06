@@ -1,39 +1,37 @@
 import { axiosTemplate } from '@/helper/axios'
 import { LoggedIn } from '@/state'
 import { useNavigate } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useSetRecoilState } from 'recoil'
 import loginBackground from '@/assets/login_bg.png'
-import { useState } from 'react'
+import { useMutation, useQuery } from 'react-query'
+import { useForm } from 'react-hook-form'
 
 const Login = () => {
   const navigate = useNavigate()
   const [_, setLoggedIn] = useRecoilState(LoggedIn)
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { register, handleSubmit } = useForm();
 
-
-  const handleSubmit = async (e: any) => {
-    e.preventDefault()
-
-    const loginInfo = {
-      email: email,
-      password: password
+  const mutation = useMutation(
+    async (formData) => {
+      await axiosTemplate.get('/sanctum/csrf-cookie')
+      return axiosTemplate.post('/api/login', formData)
+    },
+    {
+      onSuccess(res) {
+        console.log(222, res);
+        setLoggedIn(true)
+        localStorage.setItem('user', JSON.stringify(res.data))
+        navigate('/dashboard/todo/list')
+      },
     }
+  )
 
-    const res = await fetchAPI(loginInfo)
-    const user = res.data.user
-    console.log(user);
-
-    // success
-    setLoggedIn(true)
-    localStorage.setItem('user', JSON.stringify(user))
-    navigate('/dashboard/todo/list')
+  const onSubmit = (data: any) => {
+    const res = mutation.mutate(data)
+    console.log(99, res);
   }
 
-  const fetchAPI = async (loginInfo: any) => {
-    await axiosTemplate.get('/sanctum/csrf-cookie')
-    return axiosTemplate.post('/api/login', loginInfo)
-  }
+  console.log(111111, mutation.error);
 
   return (
     <div className="flex justify-center">
@@ -41,14 +39,10 @@ const Login = () => {
         <div className="px-6 pb-12 h-full text-gray-800">
           <div className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6">
             <div className="grow-0 shrink-1 md:shrink-0 basis-auto xl:w-6/12 lg:w-6/12 md:w-9/12 mb-12 md:mb-0">
-              <img
-                src={loginBackground}
-                className="w-full"
-                alt="login"
-              />
+              <img src={loginBackground} className="w-full" alt="login" />
             </div>
             <div className="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="flex flex-row items-center justify-center lg:justify-start">
                   <p className="text-md mb-0 mr-4">Sign in with</p>
                   <button
@@ -100,19 +94,17 @@ const Login = () => {
                 <div className="mb-6">
                   <input
                     type="text"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    {...register('username')}
                     className="text-md form-control block w-full px-4 py-2 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                     id="exampleFormControlInput1"
-                    placeholder="Email address"
+                    placeholder="Username or email address"
                   />
                 </div>
 
                 <div className="mb-6">
                   <input
                     type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    {...register('password')}
                     className="text-md form-control block w-full px-4 py-2 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                     id="exampleFormControlInput2"
                     placeholder="Password"

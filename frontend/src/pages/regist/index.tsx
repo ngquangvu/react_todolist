@@ -1,19 +1,54 @@
+import { axiosTemplate } from '@/helper/axios'
 import React from 'react'
+import { useForm } from 'react-hook-form'
+import { useMutation } from 'react-query'
+import { useNavigate } from 'react-router-dom'
+
 export default function Regist() {
+  const navigate = useNavigate()
+  const { register, handleSubmit } = useForm()
+
+  const mutation = useMutation(
+    async (formData) => {
+      return axiosTemplate.post('/api/register', formData)
+    },
+    {
+      onSuccess(res) {
+        navigate('/login')
+      }
+    }
+  )
+
+  const onSubmit = (data: any) => {
+    mutation.mutate(data)
+  }
+
   return (
     <div>
       <div className="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0 bg-gray-50">
         <div className="w-full px-8 py-7 mt-6 overflow-hidden bg-white shadow-md sm:max-w-md sm:rounded-lg">
-          <form>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 undefined">
-                Name
+              <label htmlFor="username" className="block text-sm font-medium text-gray-700 undefined">
+                Username
               </label>
               <div className="flex flex-col items-start">
                 <input
                   type="text"
-                  name="name"
-                  className="block w-full mt-1 px-4 py-2 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                  {...register('username')}
+                  className="block w-full mt-1 px-3 py-2 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                />
+              </div>
+            </div>
+            <div className="mt-4">
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700 undefined">
+              Fullname
+              </label>
+              <div className="flex flex-col items-start">
+                <input
+                  type="text"
+                  {...register('name')}
+                  className="block w-full mt-1 px-3 py-2 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                 />
               </div>
             </div>
@@ -24,8 +59,8 @@ export default function Regist() {
               <div className="flex flex-col items-start">
                 <input
                   type="email"
-                  name="email"
-                  className="block w-full mt-1 px-4 py-2 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                  {...register('email')}
+                  className="block w-full mt-1 px-3 py-2 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                 />
               </div>
             </div>
@@ -36,8 +71,8 @@ export default function Regist() {
               <div className="flex flex-col items-start">
                 <input
                   type="password"
-                  name="password"
-                  className="block w-full mt-1 px-4 py-2 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                  {...register('password')}
+                  className="block w-full mt-1 px-3 py-2 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                 />
               </div>
             </div>
@@ -48,8 +83,8 @@ export default function Regist() {
               <div className="flex flex-col items-start">
                 <input
                   type="password"
-                  name="password_confirmation"
-                  className="block w-full mt-1 px-4 py-2 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                  {...register('password_confirmation')}
+                  className="block w-full mt-1 px-3 py-2 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                 />
               </div>
             </div>

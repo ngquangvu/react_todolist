@@ -14,6 +14,7 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable, TwoFactorAuthenticatable, SoftDeletes, HasApiTokens;
 
+    protected $table = 'users';
 
     /**
      * The attributes that are mass assignable.
@@ -21,9 +22,11 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'firstname',
+        'lastname',
         'username',
         'email',
+        'address',
         'password',
     ];
 

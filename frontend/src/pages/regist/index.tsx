@@ -3,6 +3,7 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import { useMutation } from 'react-query'
 import { useNavigate } from 'react-router-dom'
+import { Disclosure } from '@headlessui/react'
 
 export default function Regist() {
   const navigate = useNavigate()
@@ -35,19 +36,7 @@ export default function Regist() {
               <div className="flex flex-col items-start">
                 <input
                   type="text"
-                  {...register('username')}
-                  className="block w-full mt-1 px-3 py-2 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                />
-              </div>
-            </div>
-            <div className="mt-4">
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 undefined">
-              Fullname
-              </label>
-              <div className="flex flex-col items-start">
-                <input
-                  type="text"
-                  {...register('name')}
+                  {...register('user_name')}
                   className="block w-full mt-1 px-3 py-2 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                 />
               </div>
@@ -88,6 +77,72 @@ export default function Regist() {
                 />
               </div>
             </div>
+
+            <div className="w-full mt-5">
+              <div className="mx-auto w-full max-w-md rounded-xl bg-slate-100">
+                <Disclosure>
+                  {({ open }) => (
+                    <>
+                      <Disclosure.Button className="flex w-full justify-between rounded-lg bg-blue-100 px-4 py-2 text-left text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring focus-visible:ring-blue-500 focus-visible:ring-opacity-75">
+                        <span>Optional information</span>
+                        <div className={`${open ? 'rotate-180 transform' : ''}  text-blue-500`}>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className="w-6 h-6"
+                          >
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+                          </svg>
+                        </div>
+                      </Disclosure.Button>
+                      <Disclosure.Panel className="px-3 pt-0 pb-4 text-sm text-gray-500">
+                        <div className="mt-4">
+                          <label htmlFor="name" className="block text-sm font-medium text-gray-700 undefined">
+                            Fistname
+                          </label>
+                          <div className="flex flex-col items-start">
+                            <input
+                              type="text"
+                              {...register('first_name')}
+                              className="block w-full mt-1 px-3 py-2 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                            />
+                          </div>
+                        </div>
+                        <div className="mt-4">
+                          <label htmlFor="name" className="block text-sm font-medium text-gray-700 undefined">
+                            Lastname
+                          </label>
+                          <div className="flex flex-col items-start">
+                            <input
+                              type="text"
+                              {...register('last_name')}
+                              className="block w-full mt-1 px-3 py-2 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="mt-4">
+                          <label htmlFor="email" className="block text-sm font-medium text-gray-700 undefined">
+                            Address
+                          </label>
+                          <div className="flex flex-col items-start">
+                            <textarea
+                              rows={3}
+                              {...register('address')}
+                              className="block w-full mt-1 px-3 py-2 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                            />
+                          </div>
+                        </div>
+                      </Disclosure.Panel>
+                    </>
+                  )}
+                </Disclosure>
+              </div>
+            </div>
+
             <div className="flex items-center justify-end mt-4">
               <a className="mr-5 text-blue-600 hover:text-blue-700 transition duration-200 ease-in-out" href="/login">
                 Login

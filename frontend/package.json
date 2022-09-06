@@ -16,6 +16,8 @@
     "format": "yarn prettier && yarn lint:fix"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.0",
+    "@heroicons/react": "^2.0.10",
     "axios": "^0.27.2",
     "chroma-js": "^2.4.2",
     "moment": "^2.29.4",

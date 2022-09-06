@@ -25,7 +25,7 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'username' => 'required',
+            'user_name' => 'required',
             'password' => 'required'
         ];
     }
@@ -38,20 +38,20 @@ class LoginRequest extends FormRequest
      */
     public function getCredentials()
     {
-        // The form field for providing username or password
-        // have name of "username", however, in order to support
-        // logging users in with both (username and email)
+        // The form field for providing user_name or password
+        // have name of "user_name", however, in order to support
+        // logging users in with both (user_name and email)
         // we have to check if user has entered one or another
-        $username = $this->get('username');
+        $user_name = $this->get('user_name');
 
-        if ($this->isEmail($username)) {
+        if ($this->isEmail($user_name)) {
             return [
-                'email' => $username,
+                'email' => $user_name,
                 'password' => $this->get('password')
             ];
         }
 
-        return $this->only('username', 'password');
+        return $this->only('user_name', 'password');
     }
 
     /**
@@ -66,8 +66,8 @@ class LoginRequest extends FormRequest
         $factory = $this->container->make(ValidationFactory::class);
 
         return ! $factory->make(
-            ['username' => $param],
-            ['username' => 'email']
+            ['user_name' => $param],
+            ['user_name' => 'email']
         )->fails();
     }
 }

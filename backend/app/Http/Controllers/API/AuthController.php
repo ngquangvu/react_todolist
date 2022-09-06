@@ -17,9 +17,11 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'username' => 'required|string|min:4|max:20|unique:users',
-            'name' => 'required|string|min:4|max:255',
+            'user_name' => 'required|string|min:4|max:20|unique:users',
+            'first_name' => 'required|string|max:25',
+            'last_name' => 'required|string|max:25',
             'email' => 'required|string|email|max:255|unique:users',
+            'address' => 'required|string|max:255',
             'password' => 'required|string|min:3',
             'password_confirmation' => 'required|string|same:password'
         ]);
@@ -29,8 +31,10 @@ class AuthController extends Controller
         }
 
         $user = User::create([
-            'name' => $request->name,
-            'username' => $request->username,
+            'user_name' => $request->user_name,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'address' => $request->address,
             'email' => $request->email,
             'password' => Hash::make($request->password)
         ]);
@@ -42,11 +46,11 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         $request->validate([
-            'username' => 'required',
+            'user_name' => 'required',
             'password' => 'required'
         ]);
         $credentials = $request->getCredentials();
-        // $credentials = $request->only('username', 'password');
+        // $credentials = $request->only('user_name', 'password');
 
         // return response()->json(['user' => $credentials]);
 

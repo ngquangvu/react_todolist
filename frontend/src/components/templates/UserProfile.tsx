@@ -1,20 +1,17 @@
-import { axiosTemplate } from '@/helper/axios'
-import { useQuery } from 'react-query'
+import { useState } from "react";
 
-const UserProfile = () => {
-  const fetchAPI = async () => {
-    return await axiosTemplate.get('/api/user')
-  }
+const UserProfile = (props: any) => {
 
-  const { data, error, isLoading } = useQuery('data', fetchAPI)
+  // const [userInfo, setUserInfo] = useState(null)
 
-  // Error and Loading states
-  if (error) return <div>Request Failed</div>
-  if (isLoading) return <div>Loading...</div>
+  // if (userInfo == null) {
+  //   setUserInfo(props.userInfo)
+  // }
+  console.log(props.userInfo);
 
   return (
     <>
-      {data?.data.data && (
+      {props.userInfo && (
         <div className="mt-10 sm:mt-0">
           <div className="md:grid md:grid-cols-3 md:gap-6">
             <div className="md:col-span-1">
@@ -32,7 +29,7 @@ const UserProfile = () => {
                         <span className="block text-sm font-medium text-gray-700">Username</span>
 
                         <h3 id="user_name" className="h-9 pl-2 p-2 mt-1">
-                          {data?.data.data.user_name}
+                          {props.userInfo.user_name}
                         </h3>
                       </div>
 
@@ -42,7 +39,7 @@ const UserProfile = () => {
                           type="text"
                           name="first_name"
                           id="first_name"
-                          defaultValue={data?.data.data.first_name}
+                          defaultValue={props.userInfo.first_name}
                           className="h-9 pl-2 pr-2 mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                         />
                       </div>
@@ -53,7 +50,7 @@ const UserProfile = () => {
                           type="text"
                           name="last-name"
                           id="last-name"
-                          defaultValue={data?.data.data.last_name}
+                          defaultValue={props.userInfo.last_name}
                           className="h-9 pl-2 pr-2 mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                         />
                       </div>
@@ -64,7 +61,7 @@ const UserProfile = () => {
                           type="text"
                           name="email-address"
                           id="email-address"
-                          defaultValue={data?.data.data.email}
+                          defaultValue={props.userInfo.email}
                           className="h-9 pl-2 pr-2 mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                         />
                       </div>
@@ -75,7 +72,7 @@ const UserProfile = () => {
                           type="text"
                           name="street-address"
                           id="street-address"
-                          defaultValue={data?.data.data.address}
+                          defaultValue={props.userInfo.address}
                           className="h-9 pl-2 pr-2 mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                         />
                       </div>
@@ -120,30 +117,30 @@ const UserProfile = () => {
                     <div className="mt-4 space-y-4">
                       <div className="flex items-center">
                         <input
-                          id="push-everything"
-                          name="push-notifications"
+                          id="push_everything"
+                          name="push_notifications"
                           type="radio"
                           className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300"
                         />
-                        <span className="ml-3 block text-sm font-medium text-gray-700"> Everything </span>
+                        <label htmlFor='push_everything' className="ml-3 block text-sm font-medium text-gray-700"> Everything </label>
                       </div>
                       <div className="flex items-center">
                         <input
-                          id="push-email"
-                          name="push-notifications"
+                          id="push_email"
+                          name="push_notifications"
                           type="radio"
                           className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300"
                         />
-                        <span className="ml-3 block text-sm font-medium text-gray-700"> Same as email </span>
+                        <label htmlFor='push_email' className="ml-3 block text-sm font-medium text-gray-700"> Same as email </label>
                       </div>
                       <div className="flex items-center">
                         <input
-                          id="push-nothing"
-                          name="push-notifications"
+                          id="push_nothing"
+                          name="push_notifications"
                           type="radio"
                           className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300"
                         />
-                        <span className="ml-3 block text-sm font-medium text-gray-700"> No push notifications </span>
+                        <label htmlFor='push_nothing' className="ml-3 block text-sm font-medium text-gray-700"> No push notifications </label>
                       </div>
                     </div>
                   </fieldset>

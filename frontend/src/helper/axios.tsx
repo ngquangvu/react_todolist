@@ -21,6 +21,8 @@ export const axiosTemplate = axios.create({
     Accept: 'application/json, text/plain, */*',
     'X-Requested-With': 'XMLHttpRequest',
     'Content-Type': 'multipart/form-data'
+    // 'Content-Type': 'application/json'
+
   },
   withCredentials: true
 })

@@ -1,13 +1,31 @@
-import { useState } from "react";
+import { axiosTemplate } from '@/helper/axios'
+import { UserInfo } from '@/types'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { useMutation } from 'react-query'
 
 const UserProfile = (props: any) => {
+  const {
+    formState: { isDirty, isValid },
+    register,
+    handleSubmit
+  } = useForm({ defaultValues: props.userInfo })
 
   // const [userInfo, setUserInfo] = useState(null)
 
   // if (userInfo == null) {
   //   setUserInfo(props.userInfo)
   // }
-  console.log(props.userInfo);
+  console.log(props.userInfo)
+
+  const mutationChangeUser = useMutation(async (formData: any) => {
+    formData._method = 'PUT'
+    return axiosTemplate.post('/api/user/' + props.userInfo.id, formData)
+  })
+
+  const onSubmitChangeUser = (data: any) => {
+    mutationChangeUser.mutate(data)
+  }
 
   return (
     <>
@@ -21,7 +39,7 @@ const UserProfile = (props: any) => {
               </div>
             </div>
             <div className="mt-5 md:mt-0 md:col-span-2">
-              <form action="#" method="POST">
+              <form onSubmit={handleSubmit(onSubmitChangeUser)}>
                 <div className="shadow overflow-hidden sm:rounded-md">
                   <div className="px-4 py-5 bg-white sm:p-6">
                     <div className="grid grid-cols-6 gap-6">
@@ -33,11 +51,18 @@ const UserProfile = (props: any) => {
                         </h3>
                       </div>
 
+                      <div className="col-span-6 sm:col-span-4">
+                        <span className="block text-sm font-medium text-gray-700">Email address</span>
+                        <h3 id="email" className="h-9 pl-2 p-2 mt-1">
+                          {props.userInfo.email}
+                        </h3>
+                      </div>
+
                       <div className="col-span-6 sm:col-span-3">
                         <span className="block text-sm font-medium text-gray-700">First name</span>
                         <input
                           type="text"
-                          name="first_name"
+                          {...register('first_name')}
                           id="first_name"
                           defaultValue={props.userInfo.first_name}
                           className="h-9 pl-2 pr-2 mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
@@ -48,20 +73,9 @@ const UserProfile = (props: any) => {
                         <span className="block text-sm font-medium text-gray-700">Last name</span>
                         <input
                           type="text"
-                          name="last-name"
-                          id="last-name"
+                          {...register('last_name')}
+                          id="last_name"
                           defaultValue={props.userInfo.last_name}
-                          className="h-9 pl-2 pr-2 mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                        />
-                      </div>
-
-                      <div className="col-span-6 sm:col-span-4">
-                        <span className="block text-sm font-medium text-gray-700">Email address</span>
-                        <input
-                          type="text"
-                          name="email-address"
-                          id="email-address"
-                          defaultValue={props.userInfo.email}
                           className="h-9 pl-2 pr-2 mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                         />
                       </div>
@@ -70,8 +84,8 @@ const UserProfile = (props: any) => {
                         <span className="block text-sm font-medium text-gray-700">Address</span>
                         <input
                           type="text"
-                          name="street-address"
-                          id="street-address"
+                          {...register('address')}
+                          id="address"
                           defaultValue={props.userInfo.address}
                           className="h-9 pl-2 pr-2 mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                         />
@@ -81,7 +95,8 @@ const UserProfile = (props: any) => {
                   <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
                     <button
                       type="submit"
-                      className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                      disabled={!isDirty || !isValid}
+                      className="disabled:opacity-50 disabled:cur inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                     >
                       Save
                     </button>
@@ -122,7 +137,10 @@ const UserProfile = (props: any) => {
                           type="radio"
                           className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300"
                         />
-                        <label htmlFor='push_everything' className="ml-3 block text-sm font-medium text-gray-700"> Everything </label>
+                        <label htmlFor="push_everything" className="ml-3 block text-sm font-medium text-gray-700">
+                          {' '}
+                          Everything{' '}
+                        </label>
                       </div>
                       <div className="flex items-center">
                         <input
@@ -131,7 +149,10 @@ const UserProfile = (props: any) => {
                           type="radio"
                           className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300"
                         />
-                        <label htmlFor='push_email' className="ml-3 block text-sm font-medium text-gray-700"> Same as email </label>
+                        <label htmlFor="push_email" className="ml-3 block text-sm font-medium text-gray-700">
+                          {' '}
+                          Same as email{' '}
+                        </label>
                       </div>
                       <div className="flex items-center">
                         <input
@@ -140,7 +161,10 @@ const UserProfile = (props: any) => {
                           type="radio"
                           className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300"
                         />
-                        <label htmlFor='push_nothing' className="ml-3 block text-sm font-medium text-gray-700"> No push notifications </label>
+                        <label htmlFor="push_nothing" className="ml-3 block text-sm font-medium text-gray-700">
+                          {' '}
+                          No push notifications{' '}
+                        </label>
                       </div>
                     </div>
                   </fieldset>

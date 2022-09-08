@@ -31,6 +31,18 @@ export type UserInfo = {
   address: string
 }
 
-export type TypeResponse = {
-  data: UserInfo
+export type UserInfoResponse = {
+  data: UserInfo[]
+  last_page: number
+}
+
+export type TodoResponse = {
+  data: Todo[] | null
+  link: any
+  meta: any
+}
+
+export type TodoTemplate = {
+  data: Todo[] | null
+  last_page: number
 }

@@ -107,7 +107,7 @@ const CreateTodo = () => {
           <div className="md:col-span-1">
             <div className="px-4 sm:px-0">
               <h3 className="text-lg leading-6 text-gray-900">Create Todo / Task</h3>
-              <p className="mt-1 text-sm text-gray-600">Use a permanent address where you can receive mail.</p>
+              <p className="mt-1 text-sm text-gray-600">To create a task , set all info in right side</p>
             </div>
           </div>
           <div className="mt-5 md:mt-0 md:col-span-2">
@@ -130,7 +130,7 @@ const CreateTodo = () => {
                       <span className="w-fit mb-2 text-sm text-gray-400">Content</span>
                       <textarea
                         {...register('content')}
-                        rows="4"
+                        rows={4}
                         className="block mt-1 p-2.5 w-full text-sm text-gray-900
                       rounded-md border border-gray-300 focus:ring-blue-300
                        focus:border-blue-300"

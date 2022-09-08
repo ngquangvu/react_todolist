@@ -16,10 +16,30 @@
     margin-top: 0.25rem;
 }
 
-.child-div-mt-1 > div {
+.child-div-mt-1>div {
     margin-top: 0.25rem;
 }
 
 #react-select-3-input {
     font-size: 0.875rem;
+}
+
+.pagination {
+    display: flex;
+}
+
+.pagination a {
+    float: left;
+    padding: 4px 11px;
+    text-decoration: none;
+}
+
+.pagination .active {
+    background-color: #57adfd;
+    color: white ;
+    border-radius: 5px;
+}
+
+.pagination .active:hover {
+    cursor: auto;
 }

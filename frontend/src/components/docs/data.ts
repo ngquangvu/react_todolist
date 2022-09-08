@@ -18,7 +18,7 @@ export const todoStatusOptions: readonly ColourOption[] = [
 export const todoPriorityOptions: readonly ColourOption[] = [
   { value: 'High', label: 'High', color: '#ff0000' },
   { value: 'Medium', label: 'Medium', color: '#FF8B00' },
-  { value: 'Low', label: 'Low', color: '#e9e200' }
+  { value: 'Low', label: 'Low', color: '#fff700' }
 ]
 
 export const colourOptions: readonly ColourOption[] = [

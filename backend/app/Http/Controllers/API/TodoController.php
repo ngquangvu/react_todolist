@@ -23,10 +23,14 @@ class TodoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = auth()->user();
-        $todos = $user->todos()->paginate(5);
+        if ($request->has('per_page') && $request->per_page == true) {
+            $todos = $user->todos()->paginate($request->per_page);
+        } else {
+            $todos = $user->todos()->paginate(10);
+        }
 
         return TodoResource::collection($todos);
     }

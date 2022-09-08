@@ -36,10 +36,15 @@
 
 .pagination .active {
     background-color: #57adfd;
-    color: white ;
+    color: white;
     border-radius: 5px;
 }
 
 .pagination .active:hover {
     cursor: auto;
+}
+
+.stop-stretching {
+    width: 1px;
+    white-space: nowrap;
 }

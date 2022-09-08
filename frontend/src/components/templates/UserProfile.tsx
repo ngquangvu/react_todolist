@@ -16,7 +16,6 @@ const UserProfile = (props: any) => {
   // if (userInfo == null) {
   //   setUserInfo(props.userInfo)
   // }
-  console.log(props.userInfo)
 
   const mutationChangeUser = useMutation(async (formData: any) => {
     formData._method = 'PUT'
@@ -44,7 +43,7 @@ const UserProfile = (props: any) => {
                   <div className="px-4 py-5 bg-white sm:p-6">
                     <div className="grid grid-cols-6 gap-6">
                       <div className="col-span-6 sm:col-span-6">
-                        <span className="block text-sm font-medium text-gray-700">Username</span>
+                        <span className="block text-sm  text-gray-400">Username</span>
 
                         <h3 id="user_name" className="h-9 pl-2 p-2 mt-1">
                           {props.userInfo.user_name}
@@ -52,42 +51,42 @@ const UserProfile = (props: any) => {
                       </div>
 
                       <div className="col-span-6 sm:col-span-4">
-                        <span className="block text-sm font-medium text-gray-700">Email address</span>
+                        <span className="block text-sm  text-gray-400">Email address</span>
                         <h3 id="email" className="h-9 pl-2 p-2 mt-1">
                           {props.userInfo.email}
                         </h3>
                       </div>
 
                       <div className="col-span-6 sm:col-span-3">
-                        <span className="block text-sm font-medium text-gray-700">First name</span>
+                        <span className="block text-sm  text-gray-400">First name</span>
                         <input
                           type="text"
                           {...register('first_name')}
                           id="first_name"
                           defaultValue={props.userInfo.first_name}
-                          className="h-9 pl-2 pr-2 mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          className="h-9 pl-2 pr-2 mt-1 border block w-full sm:text-sm rounded-md"
                         />
                       </div>
 
                       <div className="col-span-6 sm:col-span-3">
-                        <span className="block text-sm font-medium text-gray-700">Last name</span>
+                        <span className="block text-sm  text-gray-400">Last name</span>
                         <input
                           type="text"
                           {...register('last_name')}
                           id="last_name"
                           defaultValue={props.userInfo.last_name}
-                          className="h-9 pl-2 pr-2 mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          className="h-9 pl-2 pr-2 mt-1 border block w-full sm:text-sm rounded-md"
                         />
                       </div>
 
                       <div className="col-span-6">
-                        <span className="block text-sm font-medium text-gray-700">Address</span>
+                        <span className="block text-sm text-gray-400">Address</span>
                         <input
                           type="text"
                           {...register('address')}
                           id="address"
                           defaultValue={props.userInfo.address}
-                          className="h-9 pl-2 pr-2 mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          className="h-9 pl-2 pr-2 mt-1 border block w-full sm:text-sm rounded-md"
                         />
                       </div>
                     </div>
@@ -96,7 +95,7 @@ const UserProfile = (props: any) => {
                     <button
                       type="submit"
                       disabled={!isDirty || !isValid}
-                      className="disabled:opacity-50 disabled:cur inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                      className="disabled:opacity-50 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                     >
                       Save
                     </button>
@@ -135,7 +134,7 @@ const UserProfile = (props: any) => {
                           id="push_everything"
                           name="push_notifications"
                           type="radio"
-                          className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300"
+                          className="focus:ring-blue-500 h-4 w-4 text-blue-600"
                         />
                         <label htmlFor="push_everything" className="ml-3 block text-sm font-medium text-gray-700">
                           {' '}
@@ -147,7 +146,7 @@ const UserProfile = (props: any) => {
                           id="push_email"
                           name="push_notifications"
                           type="radio"
-                          className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300"
+                          className="focus:ring-blue-500 h-4 w-4 text-blue-600"
                         />
                         <label htmlFor="push_email" className="ml-3 block text-sm font-medium text-gray-700">
                           {' '}
@@ -159,7 +158,7 @@ const UserProfile = (props: any) => {
                           id="push_nothing"
                           name="push_notifications"
                           type="radio"
-                          className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300"
+                          className="focus:ring-blue-500 h-4 w-4 text-blue-600"
                         />
                         <label htmlFor="push_nothing" className="ml-3 block text-sm font-medium text-gray-700">
                           {' '}

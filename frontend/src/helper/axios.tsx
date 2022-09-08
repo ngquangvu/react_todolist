@@ -22,10 +22,10 @@ export const axiosTemplate = axios.create({
     'X-Requested-With': 'XMLHttpRequest',
     'Content-Type': 'multipart/form-data'
     // 'Content-Type': 'application/json'
-
   },
   withCredentials: true
 })
+axiosTemplate.defaults.headers.put['Content-Type'] = 'application/json';
 
 axiosTemplate.interceptors.response.use(
   function (response) {

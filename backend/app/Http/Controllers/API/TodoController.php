@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Enums\TodoPriorityEnum;
+use App\Enums\TodoStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\TodoResource;
 use App\Models\Todo;
@@ -53,15 +55,15 @@ class TodoController extends Controller
             'due_date' => 'required|date',
             'status' => [
                 'required',
-                 Rule::in(['N/A', 'New', 'In-progress', 'Pending', 'Canceled', 'Complete']),
-        ],
+                Rule::in(TodoStatusEnum::class),
+            ],
             'priority' => [
                 'required',
-                 Rule::in(['High', 'Medium', 'Low']),
+                Rule::in(TodoPriorityEnum::class),
             ],
         ]);
         if ($validator->fails()) {
-            return response()->json($validator->errors());
+            return response()->json($validator->errors(), 422);
         }
 
         $todo = new Todo();
@@ -119,11 +121,11 @@ class TodoController extends Controller
             'due_date' => 'required|date',
             'status' => [
                 'required',
-                 Rule::in(['N/A', 'New', 'In-progress', 'Pending', 'Canceled', 'Complete']),
+                Rule::in(['N/A', 'New', 'In-progress', 'Pending', 'Canceled', 'Complete']),
             ],
             'priority' => [
                 'required',
-                 Rule::in(['High', 'Medium', 'Low']),
+                Rule::in(['High', 'Medium', 'Low']),
             ],
         ]);
         if ($validator->fails()) {

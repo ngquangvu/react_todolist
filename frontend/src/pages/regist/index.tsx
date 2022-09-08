@@ -27,7 +27,7 @@ export default function Regist() {
   return (
     <div>
       <div className="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0 bg-gray-50">
-        <div className="w-full px-8 py-7 mt-6 overflow-hidden bg-white shadow-md sm:max-w-md sm:rounded-lg">
+        <div className="w-full px-8 py-7 mt-6 overflow-hidden bg-white shadow-md sm:max-w-md sm:rounded-md">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div>
               <label htmlFor="username" className="block text-sm font-medium text-gray-700 undefined">
@@ -79,11 +79,11 @@ export default function Regist() {
             </div>
 
             <div className="w-full mt-5">
-              <div className="mx-auto w-full max-w-md rounded-xl bg-slate-100">
+              <div className="mx-auto w-full max-w-md rounded-md bg-slate-100">
                 <Disclosure>
                   {({ open }) => (
                     <>
-                      <Disclosure.Button className="flex w-full justify-between rounded-lg bg-blue-100 px-4 py-2 text-left text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring focus-visible:ring-blue-500 focus-visible:ring-opacity-75">
+                      <Disclosure.Button className="flex w-full justify-between rounded-md bg-blue-100 px-4 py-2 text-left text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring focus-visible:ring-blue-500 focus-visible:ring-opacity-75">
                         <span>Optional information</span>
                         <div className={`${open ? 'rotate-180 transform' : ''}  text-blue-500`}>
                           <svg

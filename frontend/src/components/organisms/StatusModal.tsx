@@ -36,14 +36,14 @@ const StatusModal = (props: any) => {
             role="dialog"
           >
             <div className="relative p-4 w-full max-w-md h-full md:h-auto">
-              <div className="relative bg-white rounded-lg shadow">
+              <div className="relative bg-white rounded-md shadow">
                 {/* CLOSE */}
                 <button
                   type="button"
                   onClick={() => {
                     setIsOpen(false)
                   }}
-                  className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+                  className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-md text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
                 >
                   <svg
                     aria-hidden="true"

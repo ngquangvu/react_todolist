@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 
-
 .react-datepicker__input-container input {
     display: block;
     width: 100%;
@@ -14,5 +13,13 @@
     border-width: 1px;
     font-size: 0.875rem;
     line-height: 1.25rem;
-    /* background-color: red; */
+    margin-top: 0.25rem;
+}
+
+.child-div-mt-1 > div {
+    margin-top: 0.25rem;
+}
+
+#react-select-3-input {
+    font-size: 0.875rem;
 }

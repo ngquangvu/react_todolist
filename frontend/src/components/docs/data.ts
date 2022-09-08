@@ -6,6 +6,21 @@ export interface ColourOption {
   readonly isDisabled?: boolean
 }
 
+export const todoStatusOptions: readonly ColourOption[] = [
+  { value: 'N/A', label: 'N/A', color: '#666666'},
+  { value: 'New', label: 'New', color: '#5243AA'},
+  { value: 'In-progress', label: 'In-progress', color: '#0052CC' },
+  { value: 'Pending', label: 'Pending', color: '#FFC400' },
+  { value: 'Canceled', label: 'Canceled', color: '#FF5630' },
+  { value: 'Complete', label: 'Complete', color: '#36B37E' }
+]
+
+export const todoPriorityOptions: readonly ColourOption[] = [
+  { value: 'High', label: 'High', color: '#ff0000' },
+  { value: 'Medium', label: 'Medium', color: '#FF8B00' },
+  { value: 'Low', label: 'Low', color: '#e9e200' }
+]
+
 export const colourOptions: readonly ColourOption[] = [
   { value: 'ocean', label: 'Ocean', color: '#00B8D9', isFixed: true },
   { value: 'blue', label: 'Blue', color: '#0052CC', isDisabled: true },

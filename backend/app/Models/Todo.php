@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\TodoStatusEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -27,6 +28,7 @@ class Todo extends Model
      * @var array<string, string>
      */
     protected $casts = [
+        'status' => TodoStatusEnum::class,
         'due_date' => 'datetime',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',

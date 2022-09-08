@@ -1,6 +1,4 @@
 import { axiosTemplate } from '@/helper/axios'
-import { UserInfo } from '@/types'
-import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useMutation } from 'react-query'
 
@@ -18,8 +16,11 @@ const UserProfile = (props: any) => {
   // }
 
   const mutationChangeUser = useMutation(async (formData: any) => {
-    formData._method = 'PUT'
-    return axiosTemplate.post('/api/user/' + props.userInfo.id, formData)
+    return axiosTemplate.put('/api/user/' + props.userInfo.id, JSON.stringify(formData), {
+      headers: {
+        "content-type": "application/json",
+      }
+    })
   })
 
   const onSubmitChangeUser = (data: any) => {

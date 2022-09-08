@@ -4,13 +4,14 @@ import { axiosTemplate } from '@/helper/axios'
 import { Todo, TodoResponse } from '@/types'
 import { useQuery } from 'react-query'
 import { useRecoilState } from 'recoil'
-import { CurrentPage, LoggedIn } from '@/state'
+import { CurrentPage } from '@/state'
+import { IsLoading } from '@/state/IsLoading'
 
 const Dashboard = () => {
   const [todos, setTodos] = useState<Todo[]>([])
   const [lastPage, setLastPage] = useState<number>(0)
   const [currentPage, _] = useRecoilState(CurrentPage)
-
+  const [isLoadingState, SetIsLoadingState] = useRecoilState(IsLoading)
 
   const fetchAPI = async () => {
     const params = new URLSearchParams()
@@ -21,15 +22,17 @@ const Dashboard = () => {
     return res
   }
 
-  const { refetch, error, isLoading } = useQuery<TodoResponse>(['data', currentPage], fetchAPI)
-
+  const { error, isLoading } = useQuery<TodoResponse>(['data', currentPage], fetchAPI)
 
   // Error and Loading states
   if (error) return <div>Request Failed</div>
-  // if (isLoading) return <div>Loading...</div>
+  // if (isLoading) {
+  //   SetIsLoadingState(true)
+  // }
 
   return (
     <>
+      {SetIsLoadingState(false)}
       <DashboardTemplate todos={todos} last_page={lastPage} />
     </>
   )

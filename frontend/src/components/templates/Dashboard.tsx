@@ -7,16 +7,16 @@ import moment from 'moment'
 import ReactPaginate from 'react-paginate'
 import { useRecoilState } from 'recoil'
 import { CurrentPage } from '@/state'
+import { IsLoading } from '@/state/IsLoading'
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 const Dashboard = (props: any) => {
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false)
   const [isOpenEditModal, setIsOpenEditModal] = useState(false)
   const [editID, setEditID] = useState(0)
   const [currentPage, setCurrentPage] = useRecoilState(CurrentPage)
-
-  useEffect(() => {
-    console.log(currentPage)
-  }, [currentPage])
+  const [isLoadingState, _] = useRecoilState(IsLoading)
 
   const handlePageClick = (event: { selected: number }) => {
     setCurrentPage(event.selected + 1)
@@ -51,7 +51,8 @@ const Dashboard = (props: any) => {
               </tr>
             </thead>
             <tbody className="text-gray-600 text-sm font-light">
-              {props.todos.length > 0 &&
+              {true ? (
+                props.todos.length > 0 &&
                 props.todos.map((item: any, index: number) => (
                   <tr key={index} className="border-b last:border-b-0 border-gray-200 hover:bg-gray-100">
                     <td className="py-3 px-6 text-left whitespace-nowrap">
@@ -130,7 +131,10 @@ const Dashboard = (props: any) => {
                       </div>
                     </td>
                   </tr>
-                ))}
+                ))
+              ) : (
+                <Skeleton count={5} />
+              )}
             </tbody>
           </table>
         </div>

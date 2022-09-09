@@ -26,9 +26,10 @@ class TodoController extends Controller
      */
     public function countState()
     {
-        $all = Todo::withTrashed()->get()->count();
-        $scheduled = Todo::get()->count();
-        $onlyTrashed = Todo::onlyTrashed()->get()->count();
+        $user = auth()->user();
+        $all = $user->todos()->withTrashed()->get()->count();
+        $scheduled = $user->todos()->get()->count();
+        $onlyTrashed = $user->todos()->onlyTrashed()->get()->count();
 
         $result = new stdClass();
         $result->all = $all;

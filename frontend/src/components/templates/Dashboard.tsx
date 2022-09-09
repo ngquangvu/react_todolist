@@ -45,21 +45,89 @@ const Dashboard = (props: any) => {
   return (
     <>
       <div className="justify-center w-full max-w-6xl">
-        <div className='flex mb-5'>
-          <a className='mr-5 text-gray-700 underline text-sm' href='#'>All({props.todos_states?.all})</a>
-          <a className='mr-5 text-gray-700 underline text-sm' href='#'>Scheduled({props.todos_states?.scheduled})</a>
-          <a className='mr-5 text-gray-700 underline text-sm' href='#'>OnlyTrashed({props.todos_states?.onlyTrashed})</a>
+        <div className="flex mb-5">
+          <a
+            className="mr-5 hover:text-blue-600 hover:cursor-pointer hover:underline text-gray-700 underline text-sm"
+            href="#"
+          >
+            All({props.todos_states?.all})
+          </a>
+          <a
+            className="mr-5 hover:text-blue-600 hover:cursor-pointer hover:underline text-gray-700 underline text-sm"
+            href="#"
+          >
+            Scheduled({props.todos_states?.scheduled})
+          </a>
+          <a
+            className="mr-5 hover:text-blue-600 hover:cursor-pointer hover:underline text-gray-700 underline text-sm"
+            href="#"
+          >
+            OnlyTrashed({props.todos_states?.onlyTrashed})
+          </a>
         </div>
         <div className="overflow-hidden border rounded-md">
           <table className="min-w-full divide-y divide-gray-200">
             <thead>
-              <tr className="bg-gray-50 text-gray-500 uppercase text-sm leading-normal">
-                <th className="py-3 px-6 text-left">Id</th>
-                <th className="w-1/3 py-3 px-6 text-left">Todo / Task</th>
-                <th className="py-3 px-6 text-center">Due date</th>
-                <th className="py-3 px-6 text-center">Status</th>
-                <th className="py-3 px-6 text-center">Priority</th>
-                <th className="py-3 px-6 text-center">Actions</th>
+              <tr className="bg-gray-50 text-gray-600 uppercase text-sm leading-normal">
+                <th className="py-3 px-6 text-left">
+                  <button
+                    onClick={() => {
+                      console.log('id')
+                    }}
+                    type="button"
+                    className="hover:text-blue-500 hover:cursor-pointer hover:underline"
+                  >
+                    ID
+                  </button>
+                </th>
+                <th className="w-1/3 py-3 px-6 text-left">
+                  <button
+                    onClick={() => {
+                      console.log('todo/task')
+                    }}
+                    type="button"
+                    className="hover:text-blue-500 hover:cursor-pointer hover:underline"
+                  >
+                    TODO / TASK
+                  </button>
+                  <form action="" name="postdata1" method="post">
+                    <input type="hidden" name="orderby" value="col_1" />
+                  </form>
+                </th>
+                <th className="py-3 px-6 text-center">
+                  <button
+                    onClick={() => {
+                      console.log('due date')
+                    }}
+                    type="button"
+                    className="hover:text-blue-500 hover:cursor-pointer hover:underline"
+                  >
+                    DUE DATE
+                  </button>
+                </th>
+                <th className="py-3 px-6 text-center">
+                  <button
+                    onClick={() => {
+                      console.log('status')
+                    }}
+                    type="button"
+                    className="hover:text-blue-500 hover:cursor-pointer hover:underline"
+                  >
+                    STATUS
+                  </button>
+                </th>
+                <th className="py-3 px-6 text-center">
+                  <button
+                    onClick={() => {
+                      console.log('Priority')
+                    }}
+                    type="button"
+                    className="hover:text-blue-500 hover:cursor-pointer hover:underline"
+                  >
+                    PRIORITY
+                  </button>
+                </th>
+                <th className="py-3 px-6 text-center">ACTIONS</th>
               </tr>
             </thead>
             <tbody className="text-gray-600 text-sm font-light">

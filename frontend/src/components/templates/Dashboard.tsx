@@ -45,6 +45,11 @@ const Dashboard = (props: any) => {
   return (
     <>
       <div className="justify-center w-full max-w-6xl">
+        <div className='flex mb-5'>
+          <a className='mr-5 text-gray-700 underline text-sm' href='#'>All({props.todos_states.all})</a>
+          <a className='mr-5 text-gray-700 underline text-sm' href='#'>Scheduled({props.todos_states.scheduled})</a>
+          <a className='mr-5 text-gray-700 underline text-sm' href='#'>OnlyTrashed({props.todos_states.onlyTrashed})</a>
+        </div>
         <div className="overflow-hidden border rounded-md">
           <table className="min-w-full divide-y divide-gray-200">
             <thead>
@@ -156,11 +161,7 @@ const Dashboard = (props: any) => {
           />
         </div>
       </div>
-      <EditModal
-        isOpen={isOpenEditModal}
-        setIsOpen={setIsOpenEditModal}
-        todo={editTodoItem}
-      />
+      <EditModal isOpen={isOpenEditModal} setIsOpen={setIsOpenEditModal} todo={editTodoItem} />
       <DeleteModal
         isOpen={isOpenDeleteModal}
         setIsOpen={setIsOpenDeleteModal}

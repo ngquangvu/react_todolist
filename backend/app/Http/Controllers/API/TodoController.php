@@ -12,12 +12,33 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Laravel\Sanctum\Sanctum;
+use stdClass;
 
 use function PHPUnit\Framework\isEmpty;
 use function PHPUnit\Framework\isNull;
 
 class TodoController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function countState()
+    {
+        $all = Todo::withTrashed()->get()->count();
+        $scheduled = Todo::get()->count();
+        $onlyTrashed = Todo::onlyTrashed()->get()->count();
+
+        $result = new stdClass();
+        $result->all = $all;
+        $result->scheduled = $scheduled;
+        $result->onlyTrashed = $onlyTrashed;
+
+        return response()->json($result);
+    }
+
+
     /**
      * Display a listing of the resource.
      *

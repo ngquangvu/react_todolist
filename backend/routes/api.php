@@ -34,4 +34,5 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/todos/restore/{id}', [TodoController::class, 'restore']);
     Route::apiResource('todos', TodoController::class);
     Route::apiResource('user', UserController::class);
+    Route::get('/todos_states', [TodoController::class, 'countState']);
 });

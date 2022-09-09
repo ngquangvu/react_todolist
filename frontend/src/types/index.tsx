@@ -22,6 +22,12 @@ export type Todo = {
   due_date: Date
 }
 
+export type TodoState = {
+  all: number
+  onlyTrashed: number
+  scheduled: number
+}
+
 export type UserInfo = {
   id: number
   email: string

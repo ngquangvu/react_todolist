@@ -1,5 +1,7 @@
+import { useState } from 'react'
+
 const DeleteModal = (props: any) => {
-  const { isOpen, setIsOpen, id, description } = props
+  const { isOpen, setIsOpen, todo, description } = props
 
   return (
     <>
@@ -53,8 +55,9 @@ const DeleteModal = (props: any) => {
                       d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                     ></path>
                   </svg>
-                  <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                    {description} {id}
+                  <h3 className="mb-5 text-md font-normal text-gray-500 dark:text-gray-400">
+                    {description}
+                    <br /> {todo.title}
                   </h3>
                   <button
                     type="button"

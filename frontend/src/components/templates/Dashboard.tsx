@@ -35,15 +35,11 @@ const Dashboard = (props: any) => {
   const editTodo = (todo: Todo) => {
     setIsOpenEditModal(() => true)
     setEditTodoItem(todo)
-
-    console.log('Edit todo ' + todo.id)
   }
 
-  const deleteTodo = (id: number) => {
+  const deleteTodo = (todo: Todo) => {
     setIsOpenDeleteModal(() => true)
-    // setEditID(id)
-
-    console.log('delete todo ' + id)
+    setEditTodoItem(todo)
   }
 
   return (
@@ -103,7 +99,7 @@ const Dashboard = (props: any) => {
                         <button
                           type="button"
                           onClick={() => {
-                            deleteTodo(item.id)
+                            deleteTodo(item)
                           }}
                           className="w-4 mr-2 transform hover:text-red-500 hover:scale-110"
                         >
@@ -164,13 +160,12 @@ const Dashboard = (props: any) => {
         isOpen={isOpenEditModal}
         setIsOpen={setIsOpenEditModal}
         todo={editTodoItem}
-        description="Are you sure you want to edit this product?"
       />
       <DeleteModal
         isOpen={isOpenDeleteModal}
         setIsOpen={setIsOpenDeleteModal}
-        id={1}
-        description="Are you sure you want to delete this product?"
+        todo={editTodoItem}
+        description="Are you sure you want to delete this Todo?"
       />
     </>
   )

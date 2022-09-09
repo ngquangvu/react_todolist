@@ -15,16 +15,10 @@ import moment from 'moment'
 const EditModal = (props: any) => {
   const { isOpen, setIsOpen, todo } = props
   const [date, setDate] = useState(new Date())
-  const handleChange = (date: any) => setDate(date)
+  const handleChangeDate = (date: any) => setDate(date)
 
   const today = new Date()
 
-
-  // console.log(todo.due_date);
-  if (todo) {
-    console.log(date);
-    console.log(new Date(todo.due_date));
-  }
 
   const dot = (color = 'transparent') => ({
     alignItems: 'center',
@@ -134,7 +128,7 @@ const EditModal = (props: any) => {
                       <div className="w-fit">
                         <DatePicker
                           selected={new Date(todo.due_date)}
-                          onChange={handleChange}
+                          onChange={handleChangeDate}
                           minDate={today}
                           showTimeSelect
                           dateFormat="d/MM/yyyy hh:mm aa"

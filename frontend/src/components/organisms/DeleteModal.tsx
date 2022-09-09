@@ -1,7 +1,15 @@
+import { axiosTemplate } from '@/helper/axios'
 import { useState } from 'react'
 
 const DeleteModal = (props: any) => {
   const { isOpen, setIsOpen, todo, description } = props
+
+  const deleteTodoAPI = async () => {
+    const params = new URLSearchParams()
+    params.append('id', todo.id.toString())
+    const res = await axiosTemplate.delete('/api/todos/' + todo.id.toString()).then((response) => response)
+    console.log(res);
+  }
 
   return (
     <>
@@ -62,6 +70,7 @@ const DeleteModal = (props: any) => {
                   <button
                     type="button"
                     onClick={() => {
+                      deleteTodoAPI()
                       setIsOpen(false)
                     }}
                     className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-md text-sm inline-flex items-center px-5 py-2.5 text-center mr-2"

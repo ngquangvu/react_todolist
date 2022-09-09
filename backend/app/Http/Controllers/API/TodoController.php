@@ -49,9 +49,9 @@ class TodoController extends Controller
     {
         $user = auth()->user();
         if ($request->has('per_page') && $request->per_page == true) {
-            $todos = $user->todos()->paginate($request->per_page);
+            $todos = $user->todos()->withTrashed()->paginate($request->per_page);
         } else {
-            $todos = $user->todos()->paginate(10);
+            $todos = $user->todos()->withTrashed()->paginate(10);
         }
 
         return TodoResource::collection($todos);

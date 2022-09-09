@@ -44,7 +44,7 @@ function AuthLayout() {
         </div>
         {/* <ScrollToTop /> */}
 
-        {showButton ? (
+        {showButton && (
           <div className="fixed bottom-50 bottom-10 right-10">
             <button
               onClick={scrollToTop}
@@ -70,8 +70,6 @@ function AuthLayout() {
               </svg>
             </button>
           </div>
-        ) : (
-          <></>
         )}
       </div>
       <Footer />

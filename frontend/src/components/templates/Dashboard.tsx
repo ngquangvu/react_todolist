@@ -13,11 +13,12 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import PriorityCapsule from '../molecules/PriorityCapsule'
 import Select from 'react-select'
 import { perPageOptions } from '../molecules/Paginate'
+import { Todo } from '@/types'
 
 const Dashboard = (props: any) => {
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false)
   const [isOpenEditModal, setIsOpenEditModal] = useState(false)
-  const [editID, setEditID] = useState(0)
+  const [editTodoItem, setEditTodoItem] = useState<Todo | null>(null)
   const [currentPage, setCurrentPage] = useRecoilState(CurrentPage)
   const [perPage, setPerPage] = useRecoilState(PerPage)
   const [isLoadingContentState, _] = useRecoilState(IsLoadingContent)
@@ -31,16 +32,16 @@ const Dashboard = (props: any) => {
     setCurrentPage(1)
   }
 
-  const editTodo = (id: number) => {
+  const editTodo = (todo: Todo) => {
     setIsOpenEditModal(() => true)
-    setEditID(id)
+    setEditTodoItem(todo)
 
-    console.log('delete todo ' + id)
+    console.log('Edit todo ' + todo.id)
   }
 
   const deleteTodo = (id: number) => {
     setIsOpenDeleteModal(() => true)
-    setEditID(id)
+    // setEditID(id)
 
     console.log('delete todo ' + id)
   }
@@ -77,7 +78,7 @@ const Dashboard = (props: any) => {
                     </td>
                     <td className="py-3 px-6 text-center">
                       <div className="flex items-center justify-center">
-                        <span className="font-mono">{moment(item.due_date).format('YYYY/MM/DD hh:mm')}</span>
+                        <span className="font-mono">{moment(item.due_date).format('DD/MM/YYYY HH:mm')}</span>
                       </div>
                     </td>
                     <td className="py-3 px-6 text-center ">
@@ -91,7 +92,7 @@ const Dashboard = (props: any) => {
                         <button
                           type="button"
                           onClick={() => {
-                            editTodo(item.id)
+                            editTodo(item)
                           }}
                           className="w-4 mr-2 transform hover:text-blue-500 hover:scale-110"
                         >
@@ -134,8 +135,8 @@ const Dashboard = (props: any) => {
                 ...theme.spacing,
                 baseUnit: 2,
                 controlHeight: 2,
-                menuGutter: 2,
-              },
+                menuGutter: 2
+              }
             })}
           />
           <ReactPaginate
@@ -162,13 +163,13 @@ const Dashboard = (props: any) => {
       <EditModal
         isOpen={isOpenEditModal}
         setIsOpen={setIsOpenEditModal}
-        id={editID}
+        todo={editTodoItem}
         description="Are you sure you want to edit this product?"
       />
       <DeleteModal
         isOpen={isOpenDeleteModal}
         setIsOpen={setIsOpenDeleteModal}
-        id={editID}
+        id={1}
         description="Are you sure you want to delete this product?"
       />
     </>

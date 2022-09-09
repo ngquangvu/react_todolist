@@ -5,17 +5,26 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import Select from 'react-select'
 
-import { colourOptions } from '../docs/data'
+import { colourOptions, todoPriorityOptions, todoStatusOptions } from '../docs/data'
 
 import type { ColourOption } from '../docs/data'
 import type { StylesConfig } from 'react-select'
+import { TodoPriority, TodoStatus } from '@/types'
+import moment from 'moment'
 
 const EditModal = (props: any) => {
-  const { isOpen, setIsOpen, id } = props
+  const { isOpen, setIsOpen, todo } = props
   const [date, setDate] = useState(new Date())
   const handleChange = (date: any) => setDate(date)
 
   const today = new Date()
+
+
+  // console.log(todo.due_date);
+  if (todo) {
+    console.log(date);
+    console.log(new Date(todo.due_date));
+  }
 
   const dot = (color = 'transparent') => ({
     alignItems: 'center',
@@ -104,18 +113,19 @@ const EditModal = (props: any) => {
                   <div className="mb-8">
                     <div className="mb-4 flex flex-col justify-start">
                       <span className="w-fit mb-2 text-sm text-gray-400">ID</span>
-                      <span className="w-fit text-sm"> {id}</span>
+                      <span className="w-fit text-sm">{todo.id}</span>
                     </div>
 
                     <div className="mb-4 flex flex-col justify-start">
                       <span className="w-fit mb-2 text-sm text-gray-400">Task / Todo</span>
                       <textarea
                         id="message"
-                        rows="4"
+                        rows={4}
                         className="block p-2.5 w-full text-sm text-gray-900
-                      bg-gray-50 rounded-md border border-gray-300 focus:ring-blue-300
+                      bg-white rounded-md border border-gray-300 focus:ring-blue-300
                        focus:border-blue-300"
-                        placeholder="Leave a comment..."
+                        placeholder="Leave a content..."
+                        value={todo.content}
                       ></textarea>
                     </div>
 
@@ -123,7 +133,7 @@ const EditModal = (props: any) => {
                       <span className="w-fit mb-2 text-sm text-gray-400">Due date</span>
                       <div className="w-fit">
                         <DatePicker
-                          selected={date}
+                          selected={new Date(todo.due_date)}
                           onChange={handleChange}
                           minDate={today}
                           showTimeSelect
@@ -134,7 +144,12 @@ const EditModal = (props: any) => {
 
                     <div className="mb-4 flex flex-col justify-start">
                       <span className="w-fit mb-2 text-sm text-gray-400">Status</span>
-                      <Select defaultValue={colourOptions[2]} options={colourOptions} styles={colourStyles} />
+                      <Select defaultValue={todoStatusOptions[Object.keys(TodoStatus).indexOf(todo.status)]} options={todoStatusOptions} styles={colourStyles} />
+                    </div>
+
+                    <div className="mb-4 flex flex-col justify-start">
+                      <span className="w-fit mb-2 text-sm text-gray-400">Status</span>
+                      <Select defaultValue={todoPriorityOptions[Object.keys(TodoPriority).indexOf(todo.priority)]} options={todoPriorityOptions} styles={colourStyles} />
                     </div>
                   </div>
 
@@ -143,7 +158,7 @@ const EditModal = (props: any) => {
                     onClick={() => {
                       setIsOpen(false)
                     }}
-                    className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 rounded-md text-sm inline-flex items-center px-5 py-2.5 text-center mr-2"
+                    className="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-md text-sm inline-flex items-center px-5 py-2.5 text-center mr-2"
                   >
                     Change
                   </button>

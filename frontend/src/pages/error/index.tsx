@@ -7,7 +7,9 @@ const ErrorPage = () => {
           <p>404 Page not found.</p>
         </div>
         <div className="mt-5">
-          <a className="text-blue-800 underline" href="/dashboard">Back to Home</a>
+          <a className="text-blue-800 underline" href="/dashboard">
+            Back to Home
+          </a>
         </div>
       </div>
     </div>

@@ -6,20 +6,29 @@ import EditModal from '../organisms/EditModal'
 import moment from 'moment'
 import ReactPaginate from 'react-paginate'
 import { useRecoilState } from 'recoil'
-import { CurrentPage } from '@/state'
-import { IsLoading } from '@/state/IsLoading'
+import { CurrentPage, PerPage } from '@/state'
+import { IsLoadingContent } from '@/state/IsLoadingContent'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import PriorityCapsule from '../molecules/PriorityCapsule'
+import Select from 'react-select'
+import { perPageOptions } from '../molecules/Paginate'
 
 const Dashboard = (props: any) => {
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false)
   const [isOpenEditModal, setIsOpenEditModal] = useState(false)
   const [editID, setEditID] = useState(0)
   const [currentPage, setCurrentPage] = useRecoilState(CurrentPage)
-  const [isLoadingState, _] = useRecoilState(IsLoading)
+  const [perPage, setPerPage] = useRecoilState(PerPage)
+  const [isLoadingContentState, _] = useRecoilState(IsLoadingContent)
 
-  const handlePageClick = (event: { selected: number }) => {
+  const handleChangePage = (event: { selected: number }) => {
     setCurrentPage(event.selected + 1)
+  }
+
+  const handleChangePerPage = (perPage: number) => {
+    setPerPage(perPage)
+    setCurrentPage(1)
   }
 
   const editTodo = (id: number) => {
@@ -47,6 +56,7 @@ const Dashboard = (props: any) => {
                 <th className="w-1/3 py-3 px-6 text-left">Todo / Task</th>
                 <th className="py-3 px-6 text-center">Due date</th>
                 <th className="py-3 px-6 text-center">Status</th>
+                <th className="py-3 px-6 text-center">Priority</th>
                 <th className="py-3 px-6 text-center">Actions</th>
               </tr>
             </thead>
@@ -72,37 +82,9 @@ const Dashboard = (props: any) => {
                     </td>
                     <td className="py-3 px-6 text-center ">
                       <StatusCapsule status={item.status} />
-                      {/* <div className="relative inline-block">
-                    <StatusCapsule status={item.status} />
-                    <div
-                      className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none"
-                      role="menu"
-                      aria-orientation="vertical"
-                      aria-labelledby="menu-button"
-                    >
-                      <div className="py-1" role="none">
-                        Change to:
-                      </div>
-                      <div className="py-1" role="none">
-                        <button
-                          type="button"
-                          className="text-gray-700 block px-4 py-2 text-sm"
-                          role="menuitem"
-                          id="menu-item-6"
-                        >
-                          Active
-                        </button>
-                        <button
-                          type="button"
-                          className="text-gray-700 block px-4 py-2 text-sm"
-                          role="menuitem"
-                          id="menu-item-1"
-                        >
-                          Pending
-                        </button>
-                      </div>
-                    </div>
-                  </div> */}
+                    </td>
+                    <td className="py-3 px-6 text-center ">
+                      <PriorityCapsule status={item.status} priority={item.priority} />
                     </td>
                     <td className="py-3 px-6 text-center">
                       <div className="flex item-center justify-center">
@@ -138,13 +120,31 @@ const Dashboard = (props: any) => {
             </tbody>
           </table>
         </div>
-        <div className="mt-5">
+        <div className="mt-5 flex">
+          <Select
+            onChange={(e: any) => {
+              handleChangePerPage(e.value)
+            }}
+            defaultValue={perPageOptions[0]}
+            options={perPageOptions}
+            theme={(theme) => ({
+              ...theme,
+              borderRadius: 5,
+              spacing: {
+                ...theme.spacing,
+                baseUnit: 2,
+                controlHeight: 2,
+                menuGutter: 2,
+              },
+            })}
+          />
           <ReactPaginate
             breakLabel="..."
             nextLabel=">"
-            onPageChange={handlePageClick}
+            onPageChange={handleChangePage}
             pageRangeDisplayed={5}
             pageCount={props.last_page}
+            forcePage={currentPage !== 0 ? currentPage - 1 : 0}
             previousLabel="<"
             pageClassName="page-item"
             pageLinkClassName="page-link"

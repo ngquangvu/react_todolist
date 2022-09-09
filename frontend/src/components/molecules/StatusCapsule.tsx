@@ -5,7 +5,7 @@ const StatusCapsule = (props: any) => {
 
   return (
     <span
-      className={`font-mono py-1 px-3 rounded-full text-xs
+      className={`font-mono inline-box py-1 px-3 rounded-full text-xs
         ${status == TodoStatus.NA && 'bg-slate-200 text-slate-600'}
         ${status == TodoStatus.New && 'bg-purple-200 text-purple-600'}
         ${status == TodoStatus.InProgress && 'bg-blue-200 text-blue-600'}

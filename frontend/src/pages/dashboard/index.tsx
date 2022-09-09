@@ -4,29 +4,31 @@ import { axiosTemplate } from '@/helper/axios'
 import { Todo, TodoResponse } from '@/types'
 import { useQuery } from 'react-query'
 import { useRecoilState } from 'recoil'
-import { CurrentPage } from '@/state'
-import { IsLoading } from '@/state/IsLoading'
+import { CurrentPage, PerPage } from '@/state'
+import { IsLoadingContent } from '@/state/IsLoadingContent'
 
 const Dashboard = () => {
   const [todos, setTodos] = useState<Todo[]>([])
   const [lastPage, setLastPage] = useState<number>(0)
   const [currentPage, _] = useRecoilState(CurrentPage)
-  const [isLoadingState, SetIsLoadingState] = useRecoilState(IsLoading)
+  const [perPage, __] = useRecoilState(PerPage)
+  const [isLoadingContentState, SetIsLoadingState] = useRecoilState(IsLoadingContent)
 
   const fetchAPI = async () => {
     const params = new URLSearchParams()
     params.append('page', currentPage.toString())
+    params.append('per_page', perPage.toString())
     const res = await axiosTemplate.get('/api/todos?' + params.toString()).then((response) => response.data)
     setTodos(res.data)
     setLastPage(res.meta.last_page)
     return res
   }
 
-  const { error, isLoading } = useQuery<TodoResponse>(['data', currentPage], fetchAPI)
+  const { error, isLoading } = useQuery<TodoResponse>(['data', currentPage, perPage], fetchAPI)
 
   // Error and Loading states
   if (error) return <div>Request Failed</div>
-  // if (isLoading) {
+  // if (isLoadingContentState) {
   //   SetIsLoadingState(true)
   // }
 

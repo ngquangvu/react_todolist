@@ -48,3 +48,9 @@
     width: 1px;
     white-space: nowrap;
 }
+
+
+/* Common */
+.inline-box {
+    display: -webkit-inline-box;
+}

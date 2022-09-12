@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import chroma from 'chroma-js'
 import DatePicker from 'react-datepicker'
@@ -9,16 +9,23 @@ import { colourOptions, todoPriorityOptions, todoStatusOptions } from '../docs/d
 
 import type { ColourOption } from '../docs/data'
 import type { StylesConfig } from 'react-select'
-import { TodoPriority, TodoStatus } from '@/types'
+import { Todo, TodoPriority, TodoStatus } from '@/types'
 import moment from 'moment'
+import { useRecoilState } from 'recoil'
+import { TodoList } from '@/state'
 
 const EditModal = (props: any) => {
-  const { isOpen, setIsOpen, todo } = props
+  const { isOpen, setIsOpen, index } = props
+  const [todos, _] = useRecoilState(TodoList)
+  const [todo, setTodo] = useState<Todo | null>(null)
   const [date, setDate] = useState(new Date())
   const handleChangeDate = (date: any) => setDate(date)
 
-  const today = new Date()
+  useEffect(() => {
+    setTodo(todos[index])
+  }, [index])
 
+  const today = new Date()
 
   const dot = (color = 'transparent') => ({
     alignItems: 'center',
@@ -69,7 +76,7 @@ const EditModal = (props: any) => {
   }
   return (
     <>
-      {isOpen ? (
+      {isOpen && todo ? (
         <>
           <div
             id="popup-modal"
@@ -112,6 +119,17 @@ const EditModal = (props: any) => {
 
                     <div className="mb-4 flex flex-col justify-start">
                       <span className="w-fit mb-2 text-sm text-gray-400">Task / Todo</span>
+                      <input
+                        type="text"
+                        className="block p-2.5 w-full text-sm text-gray-900
+                      bg-white rounded-md border border-gray-300 focus:ring-blue-300
+                       focus:border-blue-300"
+                        value={todo.title}
+                      />
+                    </div>
+
+                    <div className="mb-4 flex flex-col justify-start">
+                      <span className="w-fit mb-2 text-sm text-gray-400">Task / Todo</span>
                       <textarea
                         id="message"
                         rows={4}
@@ -138,12 +156,20 @@ const EditModal = (props: any) => {
 
                     <div className="mb-4 flex flex-col justify-start">
                       <span className="w-fit mb-2 text-sm text-gray-400">Status</span>
-                      <Select defaultValue={todoStatusOptions[Object.keys(TodoStatus).indexOf(todo.status)]} options={todoStatusOptions} styles={colourStyles} />
+                      <Select
+                        defaultValue={todoStatusOptions[Object.keys(TodoStatus).indexOf(todo.status)]}
+                        options={todoStatusOptions}
+                        styles={colourStyles}
+                      />
                     </div>
 
                     <div className="mb-4 flex flex-col justify-start">
                       <span className="w-fit mb-2 text-sm text-gray-400">Status</span>
-                      <Select defaultValue={todoPriorityOptions[Object.keys(TodoPriority).indexOf(todo.priority)]} options={todoPriorityOptions} styles={colourStyles} />
+                      <Select
+                        defaultValue={todoPriorityOptions[Object.keys(TodoPriority).indexOf(todo.priority)]}
+                        options={todoPriorityOptions}
+                        styles={colourStyles}
+                      />
                     </div>
                   </div>
 

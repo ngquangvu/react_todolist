@@ -4,15 +4,15 @@ import { axiosTemplate } from '@/helper/axios'
 import { Todo, TodoResponse, TodoState } from '@/types'
 import { useQuery } from 'react-query'
 import { useRecoilState } from 'recoil'
-import { CurrentPage, PerPage } from '@/state'
+import { CurrentPage, PerPage, TodoList } from '@/state'
 import { IsLoadingContent } from '@/state/IsLoadingContent'
 
 const Dashboard = () => {
-  const [todos, setTodos] = useState<Todo[]>([])
+  const [_, setTodos] = useRecoilState(TodoList)
   const [todosStates, setTodosStates] = useState<TodoState | null>(null)
   const [lastPage, setLastPage] = useState<number>(0)
-  const [currentPage, _] = useRecoilState(CurrentPage)
-  const [perPage, __] = useRecoilState(PerPage)
+  const [currentPage, __] = useRecoilState(CurrentPage)
+  const [perPage, ___] = useRecoilState(PerPage)
   const [isLoadingContentState, SetIsLoadingState] = useRecoilState(IsLoadingContent)
 
   const fetchTodoAPI = async () => {
@@ -39,7 +39,7 @@ const Dashboard = () => {
   return (
     <>
       {SetIsLoadingState(false)}
-      <DashboardTemplate todos={todos} todos_states={todosStates} last_page={lastPage} />
+      <DashboardTemplate todos_states={todosStates} last_page={lastPage} />
     </>
   )
 }

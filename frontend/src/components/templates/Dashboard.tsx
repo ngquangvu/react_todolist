@@ -6,7 +6,7 @@ import EditModal from '../organisms/EditModal'
 import moment from 'moment'
 import ReactPaginate from 'react-paginate'
 import { useRecoilState } from 'recoil'
-import { CurrentPage, PerPage } from '@/state'
+import { CurrentPage, PerPage, TodoList } from '@/state'
 import { IsLoadingContent } from '@/state/IsLoadingContent'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
@@ -14,14 +14,16 @@ import PriorityCapsule from '../molecules/PriorityCapsule'
 import Select from 'react-select'
 import { perPageOptions } from '../molecules/Paginate'
 import { Todo } from '@/types'
+import { axiosTemplate } from '@/helper/axios'
 
 const Dashboard = (props: any) => {
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false)
   const [isOpenEditModal, setIsOpenEditModal] = useState(false)
-  const [editTodoItem, setEditTodoItem] = useState<Todo | null>(null)
+  const [editTodoIndex, setTodoIndexForModal] = useState<number | null>(null)
+  const [todos, setTodos] = useRecoilState(TodoList)
   const [currentPage, setCurrentPage] = useRecoilState(CurrentPage)
   const [perPage, setPerPage] = useRecoilState(PerPage)
-  const [isLoadingContentState, _] = useRecoilState(IsLoadingContent)
+  const [isLoadingContentState, __] = useRecoilState(IsLoadingContent)
 
   const handleChangePage = (event: { selected: number }) => {
     setCurrentPage(event.selected + 1)
@@ -32,19 +34,25 @@ const Dashboard = (props: any) => {
     setCurrentPage(1)
   }
 
-  const editTodo = (todo: Todo) => {
-    setIsOpenEditModal(() => true)
-    setEditTodoItem(todo)
+  const editTodo = (index: number) => {
+    setIsOpenEditModal(true)
+    setTodoIndexForModal(() => index)
   }
 
-  const deleteTodo = (todo: Todo) => {
-    setIsOpenDeleteModal(() => true)
-    setEditTodoItem(todo)
+  const deleteTodo = (index: number) => {
+    setIsOpenDeleteModal(true)
+    setTodoIndexForModal(index)
   }
 
-  const restoreTodo = (id: number) => {
-    console.log(id);
-    
+  const restoreTodo = async (index: number) => {
+    // success
+    if (todos[index] ) {
+      const cloneTodos = structuredClone(todos)
+      cloneTodos[index].deleted_at = null;
+      setTodos(cloneTodos)
+
+      const res = await axiosTemplate.post('/api/todos/restore/' + cloneTodos[index].id).then((response) => response)
+    }
   }
 
   return (
@@ -137,8 +145,8 @@ const Dashboard = (props: any) => {
             </thead>
             <tbody className="text-gray-600 text-sm font-light">
               {true ? (
-                props.todos.length > 0 &&
-                props.todos.map((item: any, index: number) => (
+                todos.length > 0 &&
+                todos.map((item: any, index: number) => (
                   <tr key={index} className="border-b last:border-b-0 border-gray-200 hover:bg-gray-100">
                     <td className="py-3 px-6 text-left whitespace-nowrap">
                       <div className="flex items-center">
@@ -166,7 +174,7 @@ const Dashboard = (props: any) => {
                         <button
                           type="button"
                           onClick={() => {
-                            editTodo(item)
+                            editTodo(index)
                           }}
                           className="w-4 mr-3 transform hover:text-blue-500 hover:scale-110"
                         >
@@ -178,7 +186,7 @@ const Dashboard = (props: any) => {
                           <button
                             type="button"
                             onClick={() => {
-                              deleteTodo(item)
+                              deleteTodo(index)
                             }}
                             className="w-4 mr-2 transform hover:text-red-500 hover:scale-110"
                           >
@@ -195,7 +203,7 @@ const Dashboard = (props: any) => {
                           <button
                             type="button"
                             onClick={() => {
-                              restoreTodo(item.id)
+                              restoreTodo(index)
                             }}
                             className="w-4 mr-2 transform hover:text-green-500 hover:scale-110"
                           >
@@ -259,11 +267,11 @@ const Dashboard = (props: any) => {
           />
         </div>
       </div>
-      <EditModal isOpen={isOpenEditModal} setIsOpen={setIsOpenEditModal} todo={editTodoItem} />
+      <EditModal isOpen={isOpenEditModal} setIsOpen={setIsOpenEditModal} index={editTodoIndex} />
       <DeleteModal
         isOpen={isOpenDeleteModal}
         setIsOpen={setIsOpenDeleteModal}
-        todo={editTodoItem}
+        index={editTodoIndex}
         description="Are you sure you want to delete this Todo?"
       />
     </>

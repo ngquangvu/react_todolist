@@ -98,9 +98,6 @@ const Header = () => {
             </button>
           </>
         )}
-        {/* <svg className="h-10 w-10 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
-        </svg> */}
       </div>
     </div>
   )

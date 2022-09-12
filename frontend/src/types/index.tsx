@@ -20,6 +20,7 @@ export type Todo = {
   status: string
   priority: string
   due_date: Date
+  deleted_at: Date | null
 }
 
 export type TodoState = {

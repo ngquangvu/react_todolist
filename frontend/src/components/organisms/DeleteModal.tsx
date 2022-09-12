@@ -1,19 +1,38 @@
 import { axiosTemplate } from '@/helper/axios'
-import { useState } from 'react'
+import { TodoList } from '@/state'
+import { Todo } from '@/types'
+import { useState, useEffect } from 'react'
+import { useRecoilState } from 'recoil'
 
 const DeleteModal = (props: any) => {
-  const { isOpen, setIsOpen, todo, description } = props
+  const [todos, setTodos] = useRecoilState(TodoList)
+  const [todo, setTodo] = useState<Todo | null>(null)
+  const [deleteTodoId, setDeleteTodoId] = useState<number | null>(null)
+  const { isOpen, setIsOpen, index, description } = props
+
+  useEffect(() => {
+    setTodo(todos[index])
+    if (todos[index]) {
+      setDeleteTodoId(todos[index].id)
+    }
+    console.log(isOpen , index,  todo);
+  }, [index])
 
   const deleteTodoAPI = async () => {
-    const params = new URLSearchParams()
-    params.append('id', todo.id.toString())
-    const res = await axiosTemplate.delete('/api/todos/' + todo.id.toString()).then((response) => response)
-    console.log(res);
+    // success
+    if (todos[index] ) {
+      const cloneTodos = structuredClone(todos)
+      cloneTodos[index].deleted_at = new Date();
+      setTodos(cloneTodos)
+
+      const res = await axiosTemplate.delete('/api/todos/' + deleteTodoId).then((response) => response)
+      console.log('delete modal', res)
+    }
   }
 
   return (
     <>
-      {isOpen ? (
+      {isOpen && todo ? (
         <>
           <div
             id="popup-modal"

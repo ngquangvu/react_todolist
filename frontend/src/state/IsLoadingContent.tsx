@@ -1,6 +1,6 @@
 import { atom } from 'recoil'
 
 export const IsLoadingContent = atom({
-  key: "IsLoadingContent",
+  key: "isLoadingContentAtom",
   default: false,
 });

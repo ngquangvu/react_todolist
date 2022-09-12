@@ -1,6 +1,6 @@
 import { atom } from 'recoil'
 
 export const LoggedIn = atom({
-  key: "LoggedIn",
+  key: "loggedInAtom",
   default: false,
 });

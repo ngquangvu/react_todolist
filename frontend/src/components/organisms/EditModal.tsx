@@ -4,6 +4,7 @@ import chroma from 'chroma-js'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import Select from 'react-select'
+import AsyncSelect from 'react-select/async'
 
 import { colourOptions, todoPriorityOptions, todoStatusOptions } from '../docs/data'
 
@@ -16,16 +17,29 @@ import { TodoList } from '@/state'
 
 const EditModal = (props: any) => {
   const { isOpen, setIsOpen, index } = props
-  const [todos, _] = useRecoilState(TodoList)
+  const [todos, setTodos] = useRecoilState(TodoList)
   const [todo, setTodo] = useState<Todo | null>(null)
-  const [date, setDate] = useState(new Date())
-  const handleChangeDate = (date: any) => setDate(date)
+  const [todoStatusOption, setTodoStatusOption] = useState<ColourOption | null>(null)
+  const [due_date, setDueDate] = useState(new Date())
+  const handleChangeDate = (date: any) => setDueDate(date)
+  const today = new Date()
 
   useEffect(() => {
-    setTodo(todos[index])
+    if (todos[index]) {
+      setTodo(todos[index])
+
+      setDueDate(new Date(todos[index].due_date))
+      setTodoStatusOption(todoStatusOptions[Object.keys(TodoStatus).indexOf(todos[index].status)])
+    }
   }, [index])
 
-  const today = new Date()
+  const changeTodoStatus = (e) => {
+    setTodoStatusOption(todoStatusOptions[Object.keys(TodoStatus).indexOf(e.value)])
+
+    const cloneTodos = structuredClone(todos)
+    cloneTodos[index].status = e.value
+    setTodos(cloneTodos)
+  }
 
   const dot = (color = 'transparent') => ({
     alignItems: 'center',
@@ -118,7 +132,7 @@ const EditModal = (props: any) => {
                     </div>
 
                     <div className="mb-4 flex flex-col justify-start">
-                      <span className="w-fit mb-2 text-sm text-gray-400">Task / Todo</span>
+                      <span className="w-fit mb-2 text-sm text-gray-400">Title</span>
                       <input
                         type="text"
                         className="block p-2.5 w-full text-sm text-gray-900
@@ -129,7 +143,7 @@ const EditModal = (props: any) => {
                     </div>
 
                     <div className="mb-4 flex flex-col justify-start">
-                      <span className="w-fit mb-2 text-sm text-gray-400">Task / Todo</span>
+                      <span className="w-fit mb-2 text-sm text-gray-400">Content</span>
                       <textarea
                         id="message"
                         rows={4}
@@ -145,7 +159,7 @@ const EditModal = (props: any) => {
                       <span className="w-fit mb-2 text-sm text-gray-400">Due date</span>
                       <div className="w-fit">
                         <DatePicker
-                          selected={new Date(todo.due_date)}
+                          selected={due_date}
                           onChange={handleChangeDate}
                           minDate={today}
                           showTimeSelect
@@ -157,14 +171,15 @@ const EditModal = (props: any) => {
                     <div className="mb-4 flex flex-col justify-start">
                       <span className="w-fit mb-2 text-sm text-gray-400">Status</span>
                       <Select
-                        defaultValue={todoStatusOptions[Object.keys(TodoStatus).indexOf(todo.status)]}
+                        value={todoStatusOption}
+                        onChange={(e) => changeTodoStatus(e)}
                         options={todoStatusOptions}
                         styles={colourStyles}
                       />
                     </div>
 
                     <div className="mb-4 flex flex-col justify-start">
-                      <span className="w-fit mb-2 text-sm text-gray-400">Status</span>
+                      <span className="w-fit mb-2 text-sm text-gray-400">Priority</span>
                       <Select
                         defaultValue={todoPriorityOptions[Object.keys(TodoPriority).indexOf(todo.priority)]}
                         options={todoPriorityOptions}

@@ -18,8 +18,6 @@ import 'react-loading-skeleton/dist/skeleton.css'
 
 import { Todo, TodoStatus } from '@/types'
 
-import { Avatar } from 'flowbite-react'
-
 import EditModal from '../organisms/EditModal'
 
 const Dashboard = (props: any) => {
@@ -83,7 +81,6 @@ const Dashboard = (props: any) => {
           >
             OnlyTrashed({props.todos_states?.onlyTrashed})
           </a>
-          <Avatar img="https://flowbite.com/docs/images/people/profile-picture-5.jpg" bordered={true} />{' '}
         </div>
         <div className="overflow-hidden border rounded-md">
           <table className="min-w-full divide-y divide-gray-200">

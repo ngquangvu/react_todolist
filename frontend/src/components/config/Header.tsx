@@ -1,11 +1,14 @@
-import { axiosTemplate } from '@/helper/axios'
-import { LoggedIn } from '@/state'
-import { UserInfo } from '@/types'
 import { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
+
 import { useRecoilState } from 'recoil'
 
 import { Icon } from '../atoms/Icon'
+
+import type { UserInfo } from '@/types'
+
+import { axiosTemplate } from '@/helper/axios'
+import { LoggedIn } from '@/state'
 
 const Header = () => {
   const headerIco = 'https://cdn-icons-png.flaticon.com/512/3472/3472580.png'
@@ -77,7 +80,9 @@ const Header = () => {
       <div className="h-full flex items-center">
         {isLoggedIn && (
           <>
-            <span className="mr-4 text-md text-blue-900">{user?.name}</span>
+            <span className="mr-4 text-md text-blue-900">
+              {(user?.first_name ? user?.first_name : '') + ' ' + (user?.last_name ? user?.last_name : '')}
+            </span>
             <button type="button" className="mr-5 button button-icon button-pink" onClick={Logout}>
               <svg
                 className="h-8 w-8 text-blue-600 opacity-80"

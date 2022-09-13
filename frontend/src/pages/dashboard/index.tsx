@@ -1,18 +1,22 @@
 import { useState } from 'react'
-import DashboardTemplate from '@/components/templates/Dashboard'
-import { axiosTemplate } from '@/helper/axios'
-import { Todo, TodoResponse, TodoState } from '@/types'
+
 import { useQuery } from 'react-query'
 import { useRecoilState } from 'recoil'
+
+import type { TodoResponse, TodoState } from '@/types'
+
+import DashboardTemplate from '@/components/templates/Dashboard'
+import { axiosTemplate } from '@/helper/axios'
 import { CurrentPage, PerPage, TodoList } from '@/state'
 import { IsLoadingContent } from '@/state/IsLoadingContent'
+import { Todo } from '@/types'
 
 const Dashboard = () => {
-  const [_, setTodos] = useRecoilState(TodoList)
+  const [, setTodos] = useRecoilState(TodoList)
   const [todosStates, setTodosStates] = useState<TodoState | null>(null)
   const [lastPage, setLastPage] = useState<number>(0)
-  const [currentPage, __] = useRecoilState(CurrentPage)
-  const [perPage, ___] = useRecoilState(PerPage)
+  const [currentPage] = useRecoilState(CurrentPage)
+  const [perPage] = useRecoilState(PerPage)
   const [isLoadingContentState, SetIsLoadingState] = useRecoilState(IsLoadingContent)
 
   const fetchTodoAPI = async () => {

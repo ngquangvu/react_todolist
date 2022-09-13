@@ -16,7 +16,8 @@ import { CurrentPage, PerPage, TodoList } from '@/state'
 import { IsLoadingContent } from '@/state/IsLoadingContent'
 import 'react-loading-skeleton/dist/skeleton.css'
 
-import { Todo, TodoStatus } from '@/types'
+import { TodoGetType } from '@/state/TodoGetType'
+import { TodoStatus } from '@/types'
 
 import EditModal from '../organisms/EditModal'
 
@@ -25,9 +26,10 @@ const Dashboard = (props: any) => {
   const [isOpenEditModal, setIsOpenEditModal] = useState(false)
   const [editTodoIndex, setTodoIndexForModal] = useState<number | null>(null)
   const [todos, setTodos] = useRecoilState(TodoList)
+  const [todoGetType, setTodoGetType] = useRecoilState(TodoGetType)
   const [currentPage, setCurrentPage] = useRecoilState(CurrentPage)
-  const [perPage, setPerPage] = useRecoilState(PerPage)
-  const [isLoadingContentState, __] = useRecoilState(IsLoadingContent)
+  const [, setPerPage] = useRecoilState(PerPage)
+  const [isLoadingContentState] = useRecoilState(IsLoadingContent)
 
   const handleChangePage = (event: { selected: number }) => {
     setCurrentPage(event.selected + 1)
@@ -63,24 +65,42 @@ const Dashboard = (props: any) => {
     <>
       <div className="justify-center w-full max-w-6xl">
         <div className="flex mb-5">
-          <a
-            className="mr-5 hover:text-blue-600 hover:cursor-pointer hover:underline text-gray-700 underline text-sm"
-            href="#1"
+          <button
+            type="button"
+            onClick={() => {
+              setTodoGetType('all')
+            }}
+            disabled={todoGetType === 'all'}
+            className={`mr-5 disabled:cursor-auto hover:text-blue-600 hover:cursor-pointer hover:underline text-gray-700 underline text-sm ${
+              todoGetType === 'all' && ' text-blue-600'
+            }`}
           >
             All({props.todos_states?.all})
-          </a>
-          <a
-            className="mr-5 hover:text-blue-600 hover:cursor-pointer hover:underline text-gray-700 underline text-sm"
-            href="#2"
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setTodoGetType('scheduled')
+            }}
+            disabled={todoGetType === 'scheduled'}
+            className={`mr-5 disabled:cursor-auto hover:text-blue-600 hover:cursor-pointer hover:underline text-gray-700 underline text-sm ${
+              todoGetType === 'scheduled' && ' text-blue-600'
+            }`}
           >
             Scheduled({props.todos_states?.scheduled})
-          </a>
-          <a
-            className="mr-5 hover:text-blue-600 hover:cursor-pointer hover:underline text-gray-700 underline text-sm"
-            href="#3"
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setTodoGetType('onlytrashed')
+            }}
+            disabled={todoGetType === 'onlytrashed'}
+            className={`mr-5 disabled:cursor-auto hover:text-blue-600 hover:cursor-pointer hover:underline text-gray-700 underline text-sm ${
+              todoGetType === 'onlytrashed' && ' text-blue-600'
+            }`}
           >
-            OnlyTrashed({props.todos_states?.onlyTrashed})
-          </a>
+            Deleted({props.todos_states?.onlyTrashed})
+          </button>
         </div>
         <div className="overflow-hidden border rounded-md">
           <table className="min-w-full divide-y divide-gray-200">

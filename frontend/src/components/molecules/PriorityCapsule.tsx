@@ -1,17 +1,24 @@
 import { TodoPriority, TodoStatus } from '@/types'
 
 const PriorityCapsule = (props: any) => {
-  const { status, priority } = props
+  const { deleted_at, status, priority } = props
+
+  const isHide = deleted_at !== null || status === TodoStatus.Complete || status === TodoStatus.Canceled
+  const isShowRed =
+    priority === TodoPriority.High &&
+    status !== TodoStatus.Complete &&
+    status !== TodoStatus.NA &&
+    status !== TodoStatus.Canceled
 
   return (
     <span
       className={`relative inline-box font-mono py-1 px-3 text-xs
-        ${(priority === TodoPriority.High && (status !== TodoStatus.Complete && status !== TodoStatus.NA && status !== TodoStatus.Canceled)) && ' text-red-600'}
+        ${isHide ? 'text-gray-300' : isShowRed && ' text-red-600'}
         ${priority === TodoPriority.Medium && ' text-black-700'}
         ${priority === TodoPriority.Low && ' text-back-700'}
       `}
     >
-      {(priority === TodoPriority.High && (status !== TodoStatus.Complete && status !== TodoStatus.NA && status !== TodoStatus.Canceled))? (
+      {!isHide && isShowRed ? (
         <>
           <path
             strokeLinecap="round"

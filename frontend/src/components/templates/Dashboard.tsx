@@ -1,20 +1,26 @@
 import { useEffect, useState } from 'react'
 
+import moment from 'moment'
+import Skeleton from 'react-loading-skeleton'
+import ReactPaginate from 'react-paginate'
+import Select from 'react-select'
+import { useRecoilState } from 'recoil'
+
+import { perPageOptions } from '../molecules/Paginate'
+import PriorityCapsule from '../molecules/PriorityCapsule'
 import StatusCapsule from '../molecules/StatusCapsule'
 import DeleteModal from '../organisms/DeleteModal'
-import EditModal from '../organisms/EditModal'
-import moment from 'moment'
-import ReactPaginate from 'react-paginate'
-import { useRecoilState } from 'recoil'
+
+import { axiosTemplate } from '@/helper/axios'
 import { CurrentPage, PerPage, TodoList } from '@/state'
 import { IsLoadingContent } from '@/state/IsLoadingContent'
-import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-import PriorityCapsule from '../molecules/PriorityCapsule'
-import Select from 'react-select'
-import { perPageOptions } from '../molecules/Paginate'
-import { Todo } from '@/types'
-import { axiosTemplate } from '@/helper/axios'
+
+import { Todo, TodoStatus } from '@/types'
+
+import { Avatar } from 'flowbite-react'
+
+import EditModal from '../organisms/EditModal'
 
 const Dashboard = (props: any) => {
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false)
@@ -46,9 +52,9 @@ const Dashboard = (props: any) => {
 
   const restoreTodo = async (index: number) => {
     // success
-    if (todos[index] ) {
+    if (todos[index]) {
       const cloneTodos = structuredClone(todos)
-      cloneTodos[index].deleted_at = null;
+      cloneTodos[index].deleted_at = null
       setTodos(cloneTodos)
 
       const res = await axiosTemplate.post('/api/todos/restore/' + cloneTodos[index].id).then((response) => response)
@@ -61,22 +67,23 @@ const Dashboard = (props: any) => {
         <div className="flex mb-5">
           <a
             className="mr-5 hover:text-blue-600 hover:cursor-pointer hover:underline text-gray-700 underline text-sm"
-            href="#"
+            href="#1"
           >
             All({props.todos_states?.all})
           </a>
           <a
             className="mr-5 hover:text-blue-600 hover:cursor-pointer hover:underline text-gray-700 underline text-sm"
-            href="#"
+            href="#2"
           >
             Scheduled({props.todos_states?.scheduled})
           </a>
           <a
             className="mr-5 hover:text-blue-600 hover:cursor-pointer hover:underline text-gray-700 underline text-sm"
-            href="#"
+            href="#3"
           >
             OnlyTrashed({props.todos_states?.onlyTrashed})
           </a>
+          <Avatar img="https://flowbite.com/docs/images/people/profile-picture-5.jpg" bordered={true} />{' '}
         </div>
         <div className="overflow-hidden border rounded-md">
           <table className="min-w-full divide-y divide-gray-200">
@@ -155,19 +162,35 @@ const Dashboard = (props: any) => {
                     </td>
                     <td className="py-3 px-6 text-left">
                       <div className="flex items-center">
-                        <span className="break-words font-mono">{item.title}</span>
+                        <span
+                          className={`break-words font-mono  ${
+                            (item.deleted_at !== null ||
+                              item.status === TodoStatus.Complete ||
+                              item.status === TodoStatus.Canceled) &&
+                            'text-gray-300'
+                          }`}
+                        >
+                          {item.title}
+                        </span>
                       </div>
                     </td>
                     <td className="py-3 px-6 text-center">
-                      <div className="flex items-center justify-center">
+                      <div
+                        className={`flex items-center justify-center ${
+                          (item.deleted_at !== null ||
+                            item.status === TodoStatus.Complete ||
+                            item.status === TodoStatus.Canceled) &&
+                          'text-gray-300'
+                        }`}
+                      >
                         <span className="font-mono">{moment(item.due_date).format('DD/MM/YYYY HH:mm')}</span>
                       </div>
                     </td>
                     <td className="py-3 px-6 text-center ">
-                      <StatusCapsule status={item.status} />
+                      <StatusCapsule deleted_at={item.deleted_at} status={item.status} />
                     </td>
                     <td className="py-3 px-6 text-center ">
-                      <PriorityCapsule status={item.status} priority={item.priority} />
+                      <PriorityCapsule deleted_at={item.deleted_at} status={item.status} priority={item.priority} />
                     </td>
                     <td className="py-3 px-6 text-center">
                       <div className="flex item-center justify-center">
